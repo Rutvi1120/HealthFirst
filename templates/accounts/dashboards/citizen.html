@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Citizen Dashboard - HealthFirst{% endblock %}
+{% block content %}
+<section class="dash">
+  <div class="container dash-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Citizen Panel</div>
+      <nav class="dash-menu">
+        <a class="active" href="#">Overview</a>
+        <a href="#">Create SOS</a>
+        <a href="#">Ambulance Status</a>
+        <a href="#">Beds & Blood</a>
+        <a href="#">Medical Reports</a>
+        <a href="#">Health Alerts</a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-head">
+        <div>
+          <h1>Citizen Dashboard</h1>
+          <p class="muted">SOS requests, ambulance status, reports and alerts.</p>
+        </div>
+        <div class="dash-actions">
+          <a class="btn btn-ghost" href="#">Create SOS</a>
+          <a class="btn btn-primary" href="#">View Alerts</a>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>SOS</h3>
+          <p>Create an SOS request and get assigned hospital/ambulance updates.</p>
+          <a class="link" href="#">Open</a>
+        </div>
+        <div class="card">
+          <h3>Bed Availability</h3>
+          <p>Check ICU/Oxygen/General bed availability across hospitals.</p>
+          <a class="link" href="#">Search</a>
+        </div>
+        <div class="card">
+          <h3>Blood Availability</h3>
+          <p>Search blood stock by group across hospitals.</p>
+          <a class="link" href="#">Search</a>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Medical Reports</h3>
+          <p>Upload/view reports with integrity verification.</p>
+          <a class="link" href="#">Manage</a>
+        </div>
+        <div class="card">
+          <h3>Health Alerts</h3>
+          <p>View active alerts and emergency guidance.</p>
+          <a class="link" href="#">View</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+{% endblock %}

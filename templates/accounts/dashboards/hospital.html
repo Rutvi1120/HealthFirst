@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Hospital Dashboard - HealthFirst{% endblock %}
+{% block content %}
+<section class="dash">
+  <div class="container dash-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Hospital Panel</div>
+      <nav class="dash-menu">
+        <a class="active" href="#">Overview</a>
+        <a href="#">SOS Requests</a>
+        <a href="#">Ambulances</a>
+        <a href="#">Bed Management</a>
+        <a href="#">Blood Bank</a>
+        <a href="#">Feedback</a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-head">
+        <div>
+          <h1>Hospital Admin Dashboard</h1>
+          <p class="muted">Manage SOS requests, ambulances, beds and blood stock.</p>
+        </div>
+        <div class="dash-actions">
+          <a class="btn btn-ghost" href="#">Update Beds</a>
+          <a class="btn btn-primary" href="#">Register Ambulance</a>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card"><h3>SOS Requests</h3><p>View and accept incoming SOS requests.</p><a class="link" href="#">Open</a></div>
+        <div class="card"><h3>Ambulances</h3><p>Manage ambulance list and update status live.</p><a class="link" href="#">Manage</a></div>
+        <div class="card"><h3>Beds</h3><p>Initialize and update ICU/Oxygen/General beds.</p><a class="link" href="#">Update</a></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card"><h3>Blood Bank</h3><p>Update blood group stock and availability.</p><a class="link" href="#">Update</a></div>
+        <div class="card"><h3>Feedback</h3><p>View feedback submitted by citizens.</p><a class="link" href="#">View</a></div>
+      </div>
+    </main>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}HealthFirst | Emergency Healthcare Platform{% endblock %}
+
+{% block content %}
+<section class="hero" id="sos">
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow">Emergency Healthcare Platform</div>
+      <h1>Move faster when every second matters</h1>
+      <p>
+        HealthFirst connects citizens, hospitals, and authorities to route SOS requests instantly,
+        dispatch ambulances, and keep bed and blood capacity visible in real time.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Start Coordinating</a>
+        <a class="btn btn-outline btn-lg" href="{% url 'login' %}">Login</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric">
+          <div class="metric-value">24/7</div>
+          <div class="metric-label">Response readiness</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">3x</div>
+          <div class="metric-label">Faster dispatch</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">Verified alerts</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-panel">
+        <div class="hero-panel-title">Live Command Center</div>
+        <div class="hero-panel-card">
+          <div class="chip chip-alert">SOS</div>
+          <div>
+            <div class="panel-title">Incident received</div>
+            <div class="panel-sub">Auto-routed to nearest hospital</div>
+          </div>
+        </div>
+        <div class="hero-panel-card">
+          <div class="chip chip-ambulance">AMB</div>
+          <div>
+            <div class="panel-title">Ambulance dispatched</div>
+            <div class="panel-sub">ETA updates every 2 minutes</div>
+          </div>
+        </div>
+        <div class="hero-panel-card">
+          <div class="chip chip-beds">BEDS</div>
+          <div>
+            <div class="panel-title">Capacity tracked</div>
+            <div class="panel-sub">Live bed and blood status</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="{% static 'img/doctor.png' %}" alt="Emergency healthcare" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="platform" id="workflow">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>How it works</h2>
+        <p>A clear workflow that keeps every responder aligned in real time.</p>
+      </div>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="platform-number">01</div>
+        <h3>One place for every emergency signal</h3>
+        <p>Centralize SOS requests, patient reports, and hospital readiness without delay or duplication.</p>
+      </div>
+      <div class="platform-card">
+        <div class="platform-number">02</div>
+        <h3>Live coordination across teams</h3>
+        <p>Give hospitals, ambulances, and authorities a shared timeline and status board.</p>
+      </div>
+      <div class="platform-card">
+        <div class="platform-number">03</div>
+        <h3>Trusted alerts and guidance</h3>
+        <p>Publish verified updates to prevent misinformation and guide the public safely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="modules" id="capabilities">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Capabilities built for rapid action</h2>
+        <p>Each capability removes friction from emergency response and coordination.</p>
+      </div>
+      <a class="btn btn-outline btn-sm" href="{% url 'register' %}">Explore capabilities</a>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">PC</div>
+          <span>Primary care</span>
+        </div>
+        <h3>Secure medical reports</h3>
+        <p>Integrity-verified records with controlled access for faster treatment.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">SOS</div>
+          <span>Emergency cases</span>
+        </div>
+        <h3>Instant SOS routing</h3>
+        <p>Notify nearby hospitals and lock acceptance to avoid overlaps.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">AMB</div>
+          <span>Ambulance tracking</span>
+        </div>
+        <h3>Dispatch visibility</h3>
+        <p>Track dispatch, en route, and arrival status with live updates.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">BED</div>
+          <span>Bed management</span>
+        </div>
+        <h3>Capacity intelligence</h3>
+        <p>Monitor ICU and general bed availability in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="impact">
+  <div class="container impact-grid">
+    <div class="impact-card">
+      <h2>Designed for the way real emergency teams work</h2>
+      <p>
+        HealthFirst delivers a shared, auditable timeline for every case. From the moment an SOS is raised
+        to patient arrival, teams stay aligned through clear status tracking and verified alerts.
+      </p>
+      <div class="impact-actions">
+        <a class="btn btn-primary" href="{% url 'register' %}">Get Started</a>
+        <a class="btn btn-ghost" href="{% url 'login' %}">Sign in</a>
+      </div>
+    </div>
+    <div class="impact-board">
+      <div class="impact-row">
+        <div class="impact-label">Active SOS</div>
+        <div class="impact-value">12 cases</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-label">Ambulances en route</div>
+        <div class="impact-value">7 units</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-label">Bed availability</div>
+        <div class="impact-value">68%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-label">Blood stock updates</div>
+        <div class="impact-value">Every 5 min</div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Super Admin Dashboard - HealthFirst{% endblock %}
+{% block content %}
+<section class="dash">
+  <div class="container dash-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Super Admin</div>
+      <nav class="dash-menu">
+        <a class="active" href="#">Overview</a>
+        <a href="/admin/">Admin Panel</a>
+        <a href="#">Users</a>
+        <a href="#">Hospitals</a>
+        <a href="#">System Health</a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-head">
+        <div>
+          <h1>Super Admin Dashboard</h1>
+          <p class="muted">System-level monitoring, users and configuration.</p>
+        </div>
+        <div class="dash-actions">
+          <a class="btn btn-ghost" href="/admin/">Open Admin Panel</a>
+          <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card"><h3>Users</h3><p>Manage user roles and access control.</p><a class="link" href="/admin/auth/user/">Manage</a></div>
+        <div class="card"><h3>Hospitals</h3><p>Monitor hospital onboarding and resources.</p><a class="link" href="#">View</a></div>
+        <div class="card"><h3>System</h3><p>Audit logs, configs, and system health (later).</p><a class="link" href="#">View</a></div>
+      </div>
+    </main>
+  </div>
+</section>
+{% endblock %}

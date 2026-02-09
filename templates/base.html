@@ -1,0 +1,82 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}HealthFirst{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-left">
+        <span>Emergency Hotline: 108</span>
+        <span class="dot">|</span>
+        <span>Email: healthfirst@support.com</span>
+        <span class="dot">|</span>
+        <span>Location: Gujarat, India</span>
+      </div>
+      <div class="topbar-right">
+        <a href="#" aria-label="facebook">Fb</a>
+        <a href="#" aria-label="twitter">Tw</a>
+        <a href="#" aria-label="linkedin">In</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="{% url 'landing' %}">
+        <img src="{% static 'img/logo.png' %}" onerror="this.style.display='none'" alt="">
+        <div>
+          <div class="brand-title">HealthFirst</div>
+          <div class="brand-sub">Emergency Care Network</div>
+        </div>
+      </a>
+
+      <nav class="menu">
+        <a href="{% url 'landing' %}">Home</a>
+        <a href="{% url 'landing' %}#sos">SOS</a>
+        <a href="{% url 'landing' %}#workflow">How It Works</a>
+        <a href="{% url 'landing' %}#capabilities">Capabilities</a>
+        <a href="{% url 'landing' %}#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-sos" href="{% url 'login' %}">SOS</a>
+        {% if request.user.is_authenticated %}
+          <a class="btn btn-outline" href="{% url 'dashboard' %}">Dashboard</a>
+          <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a class="btn btn-ghost" href="{% url 'login' %}">Login</a>
+          <a class="btn btn-primary" href="{% url 'register' %}">Get Started</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <footer class="footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h4>HealthFirst</h4>
+        <p>Smart emergency healthcare management system.</p>
+      </div>
+      <div>
+        <p><b>Email:</b> healthfirst@support.com</p>
+        <p><b>Location:</b> Gujarat, India</p>
+      </div>
+      <div>
+        <p><b>Operating:</b> 24/7 coordination</p>
+        <p><b>Coverage:</b> City-wide network</p>
+      </div>
+    </div>
+    <div class="footer-bottom">(c) {% now "Y" %} HealthFirst - Django Project</div>
+  </footer>
+</body>
+</html>
