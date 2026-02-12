@@ -2,9 +2,24 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
 
 from .forms import RegisterForm
+from .models import Profile
 
+
+def _canonical_role(raw_role):
+    value = (raw_role or "").strip().upper().replace("-", " ").replace("_", " ")
+    if "HOSP" in value:
+        return "HOSPITAL"
+    if "OFFIC" in value:
+        return "OFFICER"
+    if "SUPER" in value:
+        return "SUPER"
+    return "CITIZEN"
+
+
+@never_cache
 def register_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -28,6 +43,7 @@ def register_view(request):
     return render(request, "accounts/register.html", {"form": form})
 
 
+@never_cache
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -36,6 +52,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            profile, _ = Profile.objects.get_or_create(user=user)
+            canonical = _canonical_role(profile.role)
+            if profile.role != canonical:
+                profile.role = canonical
+                profile.save(update_fields=["role"])
             return redirect("dashboard")
         messages.error(request, "Invalid username or password.")
 
@@ -49,7 +70,8 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    role = request.user.profile.role
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    role = _canonical_role(profile.role)
 
     if role == "CITIZEN":
         return render(request, "accounts/dashboards/citizen.html")
