@@ -132,8 +132,8 @@ It connects **citizens, hospitals, and government authorities** to ensure faster
 ## ⚙️ Installation & Setup
 
 ```bash
-git clone https://github.com/your-username/healthfirst-sos-platform.git
-cd healthfirst-sos-platform
+git clone https://github.com/Rutvi1120/HealthFirst
+cd HealthFirst
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
