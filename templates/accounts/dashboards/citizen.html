@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {% block title %}Citizen Dashboard - HealthFirst{% endblock %}
+
 {% block content %}
 <section class="dash">
   <div class="container dash-layout">
+
     <aside class="dash-sidebar">
       <div class="dash-brand">Citizen Panel</div>
       <nav class="dash-menu">
-        <a class="active" href="#">Overview</a>
+        <a class="active" href="{% url 'dashboard' %}">Overview</a>
         <a href="#">Create SOS</a>
         <a href="#">Ambulance Status</a>
         <a href="#">Beds & Blood</a>
         <a href="#">Medical Reports</a>
-        <a href="#">Health Alerts</a>
+        <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
       </nav>
     </aside>
 
     <main class="dash-main">
+
       <div class="dash-head">
         <div>
           <h1>Citizen Dashboard</h1>
-          <p class="muted">SOS requests, ambulance status, reports and alerts.</p>
+          <p class="muted">SOS requests, ambulance status, reports, alerts.</p>
         </div>
         <div class="dash-actions">
           <a class="btn btn-ghost" href="#">Create SOS</a>
-          <a class="btn btn-primary" href="#">View Alerts</a>
+          <a class="btn btn-primary" href="{% url 'citizen_alerts' %}">View Alerts</a>
         </div>
       </div>
 
@@ -53,10 +56,26 @@
         </div>
         <div class="card">
           <h3>Health Alerts</h3>
-          <p>View active alerts and emergency guidance.</p>
-          <a class="link" href="#">View</a>
+
+          {% for alert in alerts %}
+            <div style="border-left: 4px solid
+                        {% if alert.severity == 'CRITICAL' %}red
+                        {% elif alert.severity == 'MEDIUM' %}orange
+                        {% else %}green
+                        {% endif %};
+                        padding: 10px; margin-bottom: 20px;">
+              <strong>{{ alert.title }}</strong>
+              <span class="muted">({{ alert.severity }})</span>
+              <p>{{ alert.message|truncatewords:20 }}</p>
+              <small>Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}</small>
+            </div>
+          {% empty %}
+            <p>No alerts available currently.</p>
+          {% endfor %}
+
         </div>
       </div>
+
     </main>
   </div>
 </section>

@@ -68,18 +68,38 @@ def logout_view(request):
     return redirect("login")
 
 
+from alerts.models import Alert  # ✅ ADD THIS IMPORT
+
+
 @login_required
 def dashboard_view(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
     role = _canonical_role(profile.role)
 
+    # ✅ CITIZEN DASHBOARD
     if role == "CITIZEN":
-        return render(request, "accounts/dashboards/citizen.html")
+        alerts = Alert.objects.filter(is_active=True).order_by("-created_at")[:5]
+
+        return render(
+            request,
+            "accounts/dashboards/citizen.html",
+            {"alerts": alerts}  # ✅ PASS ALERTS
+        )
+
+    # ✅ HOSPITAL DASHBOARD
     elif role == "HOSPITAL":
         return render(request, "accounts/dashboards/hospital.html")
-    elif role == "OFFICER":
-        return render(request, "accounts/dashboards/officer.html")
+
+    
+    # ✅ SUPER ADMIN DASHBOARD
     elif role == "SUPER":
         return render(request, "accounts/dashboards/super.html")
 
+    elif role == "OFFICER":
+        alerts = Alert.objects.filter(created_by=request.user).order_by("-created_at")
+        return render(
+        request,
+        "accounts/dashboards/officer.html",
+        {"alerts": alerts}
+    )
     return render(request, "accounts/dashboards/citizen.html")

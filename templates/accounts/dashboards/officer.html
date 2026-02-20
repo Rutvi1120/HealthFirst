@@ -1,36 +1,62 @@
 {% extends "base.html" %}
 {% block title %}Health Officer Dashboard - HealthFirst{% endblock %}
+
 {% block content %}
 <section class="dash">
   <div class="container dash-layout">
+
     <aside class="dash-sidebar">
-      <div class="dash-brand">Health Officer</div>
+      <div class="dash-brand">Officer Panel</div>
       <nav class="dash-menu">
-        <a class="active" href="#">Overview</a>
-        <a href="#">Alerts</a>
-        <a href="#">Guidance</a>
-        <a href="#">Analytics</a>
-        <a href="#">Reports</a>
+        <a class="active" href="{% url 'dashboard' %}">Overview</a>
+        <a href="{% url 'add_alert' %}">Add Health Alert</a>
       </nav>
     </aside>
 
     <main class="dash-main">
+
       <div class="dash-head">
         <div>
           <h1>Health Officer Dashboard</h1>
-          <p class="muted">Publish alerts, guidance and monitor system overview.</p>
+          <p class="muted">Publish and manage health alerts.</p>
         </div>
         <div class="dash-actions">
-          <a class="btn btn-ghost" href="#">Publish Guidance</a>
-          <a class="btn btn-primary" href="#">Publish Alert</a>
+          <a class="btn btn-primary" href="{% url 'add_alert' %}">
+            + Publish Alert
+          </a>
         </div>
       </div>
 
-      <div class="grid-3">
-        <div class="card"><h3>Alerts</h3><p>Create and manage public health alerts.</p><a class="link" href="#">Open</a></div>
-        <div class="card"><h3>Guidance</h3><p>Publish first-aid and emergency instructions.</p><a class="link" href="#">Open</a></div>
-        <div class="card"><h3>Analytics</h3><p>View SOS and hospital resource trends (later).</p><a class="link" href="#">View</a></div>
+      <div class="grid-1">
+
+        <div class="card">
+          <h3>Your Published Alerts</h3>
+
+          {% for alert in alerts %}
+            <div style="border-left: 4px solid
+                        {% if alert.severity == 'CRITICAL' %}red
+                        {% elif alert.severity == 'MEDIUM' %}orange
+                        {% else %}green
+                        {% endif %};
+                        padding: 10px; margin-bottom: 20px;">
+              <strong>{{ alert.title }}</strong>
+              <span class="muted">({{ alert.severity }})</span>
+              <p>{{ alert.message|truncatewords:15 }}</p>
+              <small>Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}</small>
+              <div style="margin-top: 10px;">
+                <a class="btn btn-ghost" href="{% url 'edit_alert' alert.id %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'delete_alert' alert.id %}">Delete</a>
+              </div>
+              <hr>
+            </div>
+          {% empty %}
+            <p>You have not published any alerts yet.</p>
+          {% endfor %}
+
+        </div>
+
       </div>
+
     </main>
   </div>
 </section>

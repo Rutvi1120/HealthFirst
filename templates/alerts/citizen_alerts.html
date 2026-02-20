@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Health Alerts{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Active Health Alerts</h2>
+
+  {% for alert in alerts %}
+    <div class="card" style="
+      margin-bottom: 15px;
+      border-left: 6px solid
+        {% if alert.severity == 'CRITICAL' %}red
+        {% elif alert.severity == 'MEDIUM' %}orange
+        {% else %}green
+        {% endif %};
+      padding-left: 15px;">
+      <h3>{{ alert.title }}</h3>
+      <p>{{ alert.message }}</p>
+      <small>Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}</small>
+    </div>
+  {% empty %}
+    <p>No active alerts available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

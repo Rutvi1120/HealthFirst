@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Add Health Alert{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Add Health Alert</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div>
+      <label>Title</label>
+      {{ form.title }}
+    </div>
+
+    <div>
+      <label>Message</label>
+      {{ form.message }}
+    </div>
+
+    <div>
+      <label>Severity</label>
+      {{ form.severity }}
+    </div>
+
+    <div>
+      <label>Active</label>
+      {{ form.is_active }}
+    </div>
+
+    <br>
+    <button class="btn btn-primary" type="submit">
+      Publish Alert
+    </button>
+  </form>
+</div>
+{% endblock %}
