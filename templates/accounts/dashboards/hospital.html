@@ -10,7 +10,7 @@
         <a href="#">SOS Requests</a>
         <a href="#">Ambulances</a>
         <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
-        <a href="#">Blood Bank</a>
+        <a href="{% url 'hospitals:manage_bloods' %}">Blood Bank</a>
         <a href="#">Feedback</a>
       </nav>
     </aside>
@@ -22,43 +22,20 @@
           <p class="muted">Manage SOS requests, ambulances, beds and blood stock.</p>
         </div>
         <div class="dash-actions">
-          <a class="btn btn-ghost" href="{% url 'hospitals:manage_beds' %}">Update Beds</a>
+          <a class="btn btn-ghost" href="#">Update Beds</a>
           <a class="btn btn-primary" href="#">Register Ambulance</a>
         </div>
       </div>
 
       <div class="grid-3">
-        <div class="card">
-          <h3>SOS Requests</h3>
-          <p>View and accept incoming SOS requests.</p>
-          <a class="link" href="#">Open</a>
-        </div>
-
-        <div class="card">
-          <h3>Ambulances</h3>
-          <p>Manage ambulance list and update status live.</p>
-          <a class="link" href="#">Manage</a>
-        </div>
-
-        <div class="card">
-          <h3>Beds</h3>
-          <p>Initialize and update ICU/Oxygen/General beds.</p>
-          <a class="link" href="{% url 'hospitals:manage_beds' %}">Update</a>
-        </div>
+        <div class="card"><h3>SOS Requests</h3><p>View and accept incoming SOS requests.</p><a class="link" href="#">Open</a></div>
+        <div class="card"><h3>Ambulances</h3><p>Manage ambulance list and update status live.</p><a class="link" href="#">Manage</a></div>
+        <div class="card"><h3>Beds</h3><p>Initialize and update ICU/Oxygen/General beds.</p><a class="link" href="{% url 'hospitals:manage_beds' %}">Update</a></div>
       </div>
 
       <div class="grid-2">
-        <div class="card">
-          <h3>Blood Bank</h3>
-          <p>Update blood group stock and availability.</p>
-          <a class="link" href="#">Update</a>
-        </div>
-
-        <div class="card">
-          <h3>Feedback</h3>
-          <p>View feedback submitted by citizens.</p>
-          <a class="link" href="#">View</a>
-        </div>
+        <div class="card"><h3>Blood Bank</h3><p>Update blood group stock and availability.</p><a class="link" href="{% url 'hospitals:manage_bloods' %}">Update</a></div>
+        <div class="card"><h3>Feedback</h3><p>View feedback submitted by citizens.</p><a class="link" href="#">View</a></div>
       </div>
     </main>
   </div>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Hospital Dashboard - HealthFirst{% endblock %}
+
+{% block content %}
+<section class="dash">
+  <div class="container dash-layout">
+    
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Hospital Panel</div>
+      <nav class="dash-menu">
+        <a href="#">Overview</a>
+        <a href="#">SOS Requests</a>
+        <a href="#">Ambulances</a>
+        <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+        <a class="active" href="{% url 'hospitals:manage_bloods' %}">Blood Bank</a>
+        <a href="#">Feedback</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="dash-content">
+      <div class="dash-head">
+        <div>
+          <h1>Manage Blood Availability</h1>
+          <p class="muted">Update blood stock for all blood groups.</p>
+        </div>
+      </div>
+
+      <div class="card" style="max-width:600px;">
+        <form method="POST" class="form-grid">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary btn-block">
+            Save Blood Availability
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <a href="{% url 'hospitals:view_bloods' %}" class="btn btn-secondary">
+        View Blood Stock
+      </a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

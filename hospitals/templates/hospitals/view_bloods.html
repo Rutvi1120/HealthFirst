@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Blood Availability{% endblock %}
+
+{% block content %}
+<section class="container">
+  <h1>Blood Availability Across Hospitals</h1>
+
+  {% if blood_list %}
+  <div class="card" style="overflow-x:auto;">
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+      <thead style="background-color:#f2f2f2;">
+        <tr>
+          <th>A+</th>
+          <th>A-</th>
+          <th>B+</th>
+          <th>B-</th>
+          <th>O+</th>
+          <th>O-</th>
+          <th>AB+</th>
+          <th>AB-</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for blood in blood_list %}
+        <tr>
+          <td>{{ blood.a_positive }}</td>
+          <td>{{ blood.a_negative }}</td>
+          <td>{{ blood.b_positive }}</td>
+          <td>{{ blood.b_negative }}</td>
+          <td>{{ blood.o_positive }}</td>
+          <td>{{ blood.o_negative }}</td>
+          <td>{{ blood.ab_positive }}</td>
+          <td>{{ blood.ab_negative }}</td>
+          <td>{{ blood.last_updated }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p>No blood data available.</p>
+  {% endif %}
+</section>
+{% endblock %}

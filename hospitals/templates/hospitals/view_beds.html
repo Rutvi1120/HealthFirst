@@ -1,82 +1,54 @@
 {% extends "base.html" %}
-{% block title %}Hospital Dashboard - HealthFirst{% endblock %}
+{% block title %}Hospital Bed Availability - HealthFirst{% endblock %}
+
 {% block content %}
 <section class="dash">
-  <div class="container dash-layout">
-    <aside class="dash-sidebar">
-      <div class="dash-brand">Hospital Panel</div>
-      <nav class="dash-menu">
-        <a class="active" href="#">Overview</a>
-        <a href="#">SOS Requests</a>
-        <a href="#">Ambulances</a>
-      <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
-        <a href="#">Blood Bank</a>
-        <a href="#">Feedback</a>
-      </nav>
-    </aside>
-
-    <section class="dash">
   <div class="container">
 
-    <div class="dash-head">
-      <div>
-        <h1>Hospital Bed Availability</h1>
-        <p class="muted">Live availability from all registered hospitals.</p>
+    <div class="dash-content" style="max-width:1000px; margin:0 auto;">
+
+      <!-- Header -->
+      <div class="dash-head text-center">
+        <div>
+          <h1>Hospital Bed Availability</h1>
+          <p class="muted">Live availability from all registered hospitals.</p>
+        </div>
       </div>
+
+      <!-- Table -->
+      <div class="card">
+         <table border="1" cellpadding="10" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              
+              <th>ICU</th>
+              <th>Oxygen</th>
+              <th>General</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for bed in beds %}
+            <tr>
+             
+              <td>{{ bed.icu_beds }}</td>
+              <td>{{ bed.oxygen_beds }}</td>
+              <td>{{ bed.general_beds }}</td>
+              <td>{{ bed.last_updated|date:"d M Y, H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="muted text-center">
+                No hospital data available.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
     </div>
-
-    <div class="card">
-      <table class="beds-table">
-        <thead>
-          <tr>
-            <th>Hospital</th>
-            <th>ICU</th>
-            <th>Oxygen</th>
-            <th>General</th>
-            <th>Last Updated</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {% for bed in beds %}
-          <tr>
-            <td class="hospital-name">
-              {{ bed.hospital.name }}
-            </td>
-
-            <td>
-              <span class="chip chip-alert">
-                {{ bed.icu_beds }}
-              </span>
-            </td>
-
-            <td>
-              <span class="chip chip-ambulance">
-                {{ bed.oxygen_beds }}
-              </span>
-            </td>
-
-            <td>
-              <span class="chip chip-beds">
-                {{ bed.general_beds }}
-              </span>
-            </td>
-
-            <td class="muted">
-              {{ bed.last_updated }}
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="5" class="muted text-center">
-              No hospital data available.
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
   </div>
 </section>
 {% endblock %}
