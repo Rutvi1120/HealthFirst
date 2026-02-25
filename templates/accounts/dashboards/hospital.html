@@ -11,7 +11,7 @@
         <a href="#">Ambulances</a>
         <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
         <a href="{% url 'hospitals:manage_bloods' %}">Blood Bank</a>
-        <a href="#">Feedback</a>
+        <a href="{% url 'hospitals:view_feedback' %}">Feedback</a>
       </nav>
     </aside>
 
@@ -35,7 +35,7 @@
 
       <div class="grid-2">
         <div class="card"><h3>Blood Bank</h3><p>Update blood group stock and availability.</p><a class="link" href="{% url 'hospitals:manage_bloods' %}">Update</a></div>
-        <div class="card"><h3>Feedback</h3><p>View feedback submitted by citizens.</p><a class="link" href="#">View</a></div>
+        <div class="card"><h3>Feedback</h3><p>View feedback submitted by citizens.</p><a class="link" href="{% url 'hospitals:view_feedback' %}">View</a></div>
       </div>
     </main>
   </div>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Submit Feedback{% endblock %}
+
+{% block content %}
+<section class="container">
+  <h1>Submit Feedback</h1>
+
+  <div class="card" style="max-width:600px;">
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">
+        Submit Feedback
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}

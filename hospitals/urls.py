@@ -8,5 +8,7 @@ urlpatterns = [
     path('view-beds/', views.view_beds, name='view_beds'),
     path('manage-bloods/', views.manage_bloods, name='manage_bloods'),
     path('view-bloods/', views.view_bloods, name='view_bloods'), 
+    path('submit-feedback/', views.submit_feedback, name='submit_feedback'),
+    path('view-feedback/', views.view_feedback, name='view_feedback'),
 ]
 

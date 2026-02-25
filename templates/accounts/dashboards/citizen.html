@@ -12,6 +12,7 @@
         <a href="#">Beds & Blood</a>
         <a href="#">Medical Reports</a>
         <a href="#">Health Alerts</a>
+        <a href="{% url 'hospitals:submit_feedback' %}">Feedback</a>
       </nav>
     </aside>
 
@@ -55,6 +56,11 @@
           <h3>Health Alerts</h3>
           <p>View active alerts and emergency guidance.</p>
           <a class="link" href="#">View</a>
+        </div>
+         <div class="card">
+          <h3>Feedback</h3>
+          <p>Share your experience or concerns directly with the hospital through feedback</p>
+          <a class="link" href="{% url 'hospitals:submit_feedback' %}">View</a>
         </div>
       </div>
     </main>

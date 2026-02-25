@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Hospital Feedback{% endblock %}
+
+{% block content %}
+<section class="container">
+  <h1>Citizen Feedback</h1>
+
+  {% for feedback in feedbacks %}
+  <div class="card" style="margin-bottom:15px;">
+    <strong>{{ feedback.citizen.username }}</strong>
+    <p>{{ feedback.message }}</p>
+    <small class="muted">{{ feedback.created_at }}</small>
+  </div>
+  {% empty %}
+  <p>No feedback available.</p>
+  {% endfor %}
+</section>
+
+{% endblock %}
