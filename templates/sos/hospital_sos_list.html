@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Nearby SOS Requests</h2>
+
+{% if sos_list %}
+    {% for sos in sos_list %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+            <p><strong>ID:</strong> {{ sos.id }}</p>
+            <p><strong>Description:</strong> {{ sos.description }}</p>
+            <p><strong>Location:</strong> {{ sos.latitude }}, {{ sos.longitude }}</p>
+            <p><strong>Status:</strong> {{ sos.status }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No nearby SOS requests.</p>
+{% endif %}
+
+{% endblock %}

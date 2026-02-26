@@ -7,7 +7,7 @@
       <div class="dash-brand">Citizen Panel</div>
       <nav class="dash-menu">
         <a class="active" href="#">Overview</a>
-        <a href="#">Create SOS</a>
+        <a href="{% url 'raise_sos' %}">Create SOS</a>
         <a href="#">Ambulance Status</a>
         <a href="#">Beds & Blood</a>
         <a href="#">Medical Reports</a>
@@ -23,7 +23,7 @@
           <p class="muted">SOS requests, ambulance status, reports and alerts.</p>
         </div>
         <div class="dash-actions">
-          <a class="btn btn-ghost" href="#">Create SOS</a>
+          <a class="btn btn-ghost" href="{% url 'raise_sos' %}">Create SOS</a>
           <a class="btn btn-primary" href="#">View Alerts</a>
         </div>
       </div>
@@ -32,13 +32,15 @@
         <div class="card">
           <h3>SOS</h3>
           <p>Create an SOS request and get assigned hospital/ambulance updates.</p>
-          <a class="link" href="#">Open</a>
+          <a class="link" href="{% url 'raise_sos' %}">Open</a>
         </div>
+
         <div class="card">
           <h3>Bed Availability</h3>
           <p>Check ICU/Oxygen/General bed availability across hospitals.</p>
           <a class="link" href="{% url 'hospitals:view_beds' %}">Search</a>
         </div>
+
         <div class="card">
           <h3>Blood Availability</h3>
           <p>Search blood stock by group across hospitals.</p>
@@ -52,12 +54,14 @@
           <p>Upload/view reports with integrity verification.</p>
           <a class="link" href="#">Manage</a>
         </div>
+
         <div class="card">
           <h3>Health Alerts</h3>
           <p>View active alerts and emergency guidance.</p>
           <a class="link" href="#">View</a>
         </div>
-         <div class="card">
+
+        <div class="card">
           <h3>Feedback</h3>
           <p>Share your experience or concerns directly with the hospital through feedback</p>
           <a class="link" href="{% url 'hospitals:submit_feedback' %}">View</a>
