@@ -2,24 +2,37 @@
 {% block title %}Health Alerts{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h2>Active Health Alerts</h2>
+<div class="container" style="padding: 20px;">
+  <h2 style="margin-bottom: 20px;">🚨 Active Health Alerts</h2>
 
   {% for alert in alerts %}
-    <div class="card" style="
-      margin-bottom: 15px;
+    <div style="
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 8px;
       border-left: 6px solid
         {% if alert.severity == 'CRITICAL' %}red
         {% elif alert.severity == 'MEDIUM' %}orange
         {% else %}green
         {% endif %};
-      padding-left: 15px;">
-      <h3>{{ alert.title }}</h3>
-      <p>{{ alert.message }}</p>
-      <small>Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}</small>
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    ">
+
+      <h3 style="margin: 0;">{{ alert.title }}</h3>
+
+      <p style="margin-top: 10px;">{{ alert.message }}</p>
+
+      <small style="color: gray;">
+        Severity: <strong>{{ alert.severity }}</strong> |
+        Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}
+      </small>
+
     </div>
+
   {% empty %}
     <p>No active alerts available.</p>
   {% endfor %}
+
 </div>
 {% endblock %}
