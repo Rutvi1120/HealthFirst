@@ -20,7 +20,7 @@
          <table border="1" cellpadding="10" cellspacing="0" width="100%">
           <thead>
             <tr>
-              
+              <th>Hospital</th>
               <th>ICU</th>
               <th>Oxygen</th>
               <th>General</th>
@@ -31,7 +31,7 @@
           <tbody>
             {% for bed in beds %}
             <tr>
-             
+              <td>{{ bed.hospital }}</td>
               <td>{{ bed.icu_beds }}</td>
               <td>{{ bed.oxygen_beds }}</td>
               <td>{{ bed.general_beds }}</td>

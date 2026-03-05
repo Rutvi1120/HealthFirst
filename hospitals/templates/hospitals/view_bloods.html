@@ -10,6 +10,7 @@
     <table border="1" cellpadding="10" cellspacing="0" width="100%">
       <thead style="background-color:#f2f2f2;">
         <tr>
+          <th>Hospital</th>
           <th>A+</th>
           <th>A-</th>
           <th>B+</th>
@@ -24,6 +25,7 @@
       <tbody>
         {% for blood in blood_list %}
         <tr>
+          <td>{{ blood.hospital }}</td>
           <td>{{ blood.a_positive }}</td>
           <td>{{ blood.a_negative }}</td>
           <td>{{ blood.b_positive }}</td>
