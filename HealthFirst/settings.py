@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'hospitals',
     'ambulances',
     'bloodbank',
-    'reports',
+    'medical_reports',
     'alerts',
     'guidance',
     'feedback',
@@ -127,3 +127,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
