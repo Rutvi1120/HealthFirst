@@ -12,14 +12,10 @@ urlpatterns = [
     path('alerts/', include('alerts.urls')),
     path('hospitals/', include('hospitals.urls')),
     path('sos/', include('sos.urls')),
-<<<<<<< HEAD
     path('bloodbank/', include('bloodbank.urls')),
     path('feedback/', include('feedback.urls')),
-]
-=======
     path('reports/', include('medical_reports.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> 85a2aa15767e2c2a3ef332b90390b1645ef613f6

@@ -6,65 +6,51 @@
   <div class="container dash-layout">
 
     <aside class="dash-sidebar">
-  <div class="dash-brand">Citizen Panel</div>
+      <div class="dash-brand">Citizen Panel</div>
 
-  <nav class="dash-menu">
-    <a class="active" href="{% url 'dashboard' %}">Overview</a>
-
-<<<<<<< HEAD
+      <nav class="dash-menu">
+        <a class="active" href="{% url 'dashboard' %}">Overview</a>
+        <a href="{% url 'raise_sos' %}">Create SOS</a>
+        <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+        <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+        <a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+        <a href="{% url 'my_reports' %}">Medical Reports</a>
+        <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
         <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
       </nav>
     </aside>
-=======
-    <a href="{% url 'raise_sos' %}">Create SOS</a>
->>>>>>> 85a2aa15767e2c2a3ef332b90390b1645ef613f6
 
-    <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+    <main class="dash-main">
 
-    <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
-
-    <a href="{% url 'hospitals:view_bloods' %}">Blood Availability</a>
-
-    <a href="{% url 'my_reports' %}">Medical Reports</a>
-
-    <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
-
-    <a href="{% url 'hospitals:submit_feedback' %}">Feedback</a>
-  </nav>
-</aside>
-
-   <main class="dash-main">
-
-  <div class="dash-head-center">
-    <h1>Citizen Dashboard</h1>
-    <p class="muted">Use SOS in case of emergency. Stay updated with health alerts.</p>
-  </div>
-
-  <!-- BIG SOS BUTTON -->
-  <div class="sos-center">
-    <a class="big-sos-btn" href="{% url 'raise_sos' %}">
-      🚨 EMERGENCY SOS
-    </a>
-  </div>
-
-  <!-- ALERTS SECTION -->
-  <div class="alerts-area">
-
-    <h2>Health Alerts</h2>
-
-    {% for alert in alerts %}
-      <div class="alert-box">
-        <h4>{{ alert.title }}</h4>
-        <p>{{ alert.description }}</p>
-        <small>{{ alert.created_at }}</small>
+      <div class="dash-head-center">
+        <h1>Citizen Dashboard</h1>
+        <p class="muted">Use SOS in case of emergency. Stay updated with health alerts.</p>
       </div>
-    {% empty %}
-      <p class="muted">No alerts available right now.</p>
-    {% endfor %}
 
-  </div>
+      <!-- BIG SOS BUTTON -->
+      <div class="sos-center">
+        <a class="big-sos-btn" href="{% url 'raise_sos' %}">
+          🚨 EMERGENCY SOS
+        </a>
+      </div>
 
-<<<<<<< HEAD
+      <!-- ALERTS SECTION -->
+      <div class="alerts-area">
+        <h2>Health Alerts</h2>
+
+        {% for alert in alerts %}
+          <div class="alert-box">
+            <h4>{{ alert.title }}</h4>
+            <p>{{ alert.description }}</p>
+            <small>{{ alert.created_at }}</small>
+          </div>
+        {% empty %}
+          <p class="muted">No alerts available right now.</p>
+        {% endfor %}
+      </div>
+
+      <!-- CARDS SECTION -->
+      <div class="grid-2">
         <div class="card">
           <h3>Bed Availability</h3>
           <p>Check ICU/Oxygen/General bed availability across hospitals.</p>
@@ -76,36 +62,27 @@
           <p>Search blood stock by group across hospitals.</p>
           <a class="link" href="{% url 'bloodbank:view_bloods' %}">Search</a>
         </div>
-      </div>
 
-      <div class="grid-2">
         <div class="card">
           <h3>Medical Reports</h3>
           <p>Upload/view reports with integrity verification.</p>
-          <a class="link" href="#">Manage</a>
+          <a class="link" href="{% url 'my_reports' %}">Manage</a>
         </div>
 
         <div class="card">
           <h3>Health Alerts</h3>
           <p>View active alerts and emergency guidance.</p>
-
-          <!-- ✅ FIXED CARD LINK -->
-          <a class="link" href="{% url 'citizen_alerts' %}">
-            View
-          </a>
+          <a class="link" href="{% url 'citizen_alerts' %}">View</a>
         </div>
 
         <div class="card">
           <h3>Feedback</h3>
-          <p>Share your experience or concerns directly with the hospital through feedback</p>
+          <p>Share your experience or concerns directly with the hospital through feedback.</p>
           <a class="link" href="{% url 'feedback:submit_feedback' %}">View</a>
         </div>
       </div>
 
     </main>
-=======
-</main>
->>>>>>> 85a2aa15767e2c2a3ef332b90390b1645ef613f6
   </div>
 </section>
 {% endblock %}
