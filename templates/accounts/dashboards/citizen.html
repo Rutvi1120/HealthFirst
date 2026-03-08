@@ -6,46 +6,65 @@
   <div class="container dash-layout">
 
     <aside class="dash-sidebar">
-      <div class="dash-brand">Citizen Panel</div>
-      <nav class="dash-menu">
-        <a class="active" href="#">Overview</a>
-        <a href="{% url 'raise_sos' %}">Create SOS</a>
-        <a href="#">Ambulance Status</a>
-        <a href="#">Beds & Blood</a>
-        <a href="#">Medical Reports</a>
+  <div class="dash-brand">Citizen Panel</div>
 
-        <!-- ✅ FIXED ALERTS LINK -->
-        <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+  <nav class="dash-menu">
+    <a class="active" href="{% url 'dashboard' %}">Overview</a>
 
+<<<<<<< HEAD
         <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
       </nav>
     </aside>
+=======
+    <a href="{% url 'raise_sos' %}">Create SOS</a>
+>>>>>>> 85a2aa15767e2c2a3ef332b90390b1645ef613f6
 
-    <main class="dash-main">
+    <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
 
-      <div class="dash-head">
-        <div>
-          <h1>Citizen Dashboard</h1>
-          <p class="muted">SOS requests, ambulance status, reports and alerts.</p>
-        </div>
+    <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
 
-        <div class="dash-actions">
-          <a class="btn btn-ghost" href="{% url 'raise_sos' %}">Create SOS</a>
+    <a href="{% url 'hospitals:view_bloods' %}">Blood Availability</a>
 
-          <!-- ✅ FIXED BUTTON -->
-          <a class="btn btn-primary" href="{% url 'citizen_alerts' %}">
-            View Alerts
-          </a>
-        </div>
+    <a href="{% url 'my_reports' %}">Medical Reports</a>
+
+    <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+
+    <a href="{% url 'hospitals:submit_feedback' %}">Feedback</a>
+  </nav>
+</aside>
+
+   <main class="dash-main">
+
+  <div class="dash-head-center">
+    <h1>Citizen Dashboard</h1>
+    <p class="muted">Use SOS in case of emergency. Stay updated with health alerts.</p>
+  </div>
+
+  <!-- BIG SOS BUTTON -->
+  <div class="sos-center">
+    <a class="big-sos-btn" href="{% url 'raise_sos' %}">
+      🚨 EMERGENCY SOS
+    </a>
+  </div>
+
+  <!-- ALERTS SECTION -->
+  <div class="alerts-area">
+
+    <h2>Health Alerts</h2>
+
+    {% for alert in alerts %}
+      <div class="alert-box">
+        <h4>{{ alert.title }}</h4>
+        <p>{{ alert.description }}</p>
+        <small>{{ alert.created_at }}</small>
       </div>
+    {% empty %}
+      <p class="muted">No alerts available right now.</p>
+    {% endfor %}
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>SOS</h3>
-          <p>Create an SOS request and get assigned hospital/ambulance updates.</p>
-          <a class="link" href="{% url 'raise_sos' %}">Open</a>
-        </div>
+  </div>
 
+<<<<<<< HEAD
         <div class="card">
           <h3>Bed Availability</h3>
           <p>Check ICU/Oxygen/General bed availability across hospitals.</p>
@@ -84,6 +103,9 @@
       </div>
 
     </main>
+=======
+</main>
+>>>>>>> 85a2aa15767e2c2a3ef332b90390b1645ef613f6
   </div>
 </section>
 {% endblock %}

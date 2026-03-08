@@ -99,4 +99,9 @@ def dashboard_view(request):
         "accounts/dashboards/officer.html",
         {"alerts": alerts}
     )
-    return render(request, "accounts/dashboards/citizen.html")
+    alerts = Alert.objects.filter(is_active=True).order_by("-created_at")[:5]
+    return render(
+        request,
+        "accounts/dashboards/citizen.html",
+        {"alerts": alerts}
+    )

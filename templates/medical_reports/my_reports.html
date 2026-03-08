@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}My Medical Reports{% endblock %}
+
+{% block content %}
+
+<div style="max-width:800px;margin:auto;padding:30px">
+
+<h2 style="margin-bottom:20px">My Medical Reports</h2>
+
+<a href="{% url 'upload_report' %}" class="btn-upload">
+Upload New Report
+</a>
+
+{% for report in reports %}
+
+<div class="report-card">
+
+    <div class="report-info">
+        <h3>{{ report.title }}</h3>
+        
+    </div>
+
+    <a href="{{ report.report_file.url }}" class="view-btn" target="_blank">
+        View Report
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No reports uploaded yet.</p>
+
+{% endfor %}
+
+</div>
+
+<style>
+
+.btn-upload{
+background:#2c7be5;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+display:inline-block;
+margin-bottom:20px;
+}
+
+.report-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f4f6f9;
+padding:18px;
+border-radius:8px;
+margin-bottom:15px;
+box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+.report-info h3{
+margin:0;
+}
+
+.view-btn{
+background:#28a745;
+color:white;
+padding:8px 14px;
+border-radius:6px;
+text-decoration:none;
+}
+
+</style>
+
+{% endblock %}
