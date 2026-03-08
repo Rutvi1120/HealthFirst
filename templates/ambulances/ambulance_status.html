@@ -10,7 +10,7 @@
 <h1>Ambulance Status</h1>
 <p class="muted">Track ambulance assigned to your SOS request.</p>
 
-<table class="table">
+<table class="table" border="1">
 <thead>
 <tr>
 <th>SOS ID</th>
@@ -27,9 +27,9 @@
 
 <tr>
 <td>{{ sos.id }}</td>
-<td>{{ sos.location }}</td>
+<td>{{ sos.latitude }}, {{ sos.longitude }}</td>
 <td>{{ sos.status }}</td>
-<td>{{ sos.assigned_hospital }}</td>
+<td>{{ sos.accepted_by }}</td>
 <td>{{ sos.created_at }}</td>
 </tr>
 

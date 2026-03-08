@@ -11,7 +11,7 @@ import math
 # Distance Calculator
 # ---------------------------
 def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Earth radius in km
+    R = 6371
 
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1)
@@ -58,6 +58,7 @@ def raise_sos(request):
 # ---------------------------
 # Hospital View Nearby SOS
 # ---------------------------
+
 @login_required
 def hospital_sos_list(request):
 
@@ -68,10 +69,14 @@ def hospital_sos_list(request):
     hospital = get_object_or_404(Hospital, admin=request.user)
 
     pending_sos = SOSRequest.objects.filter(status="PENDING")
+    accepted_sos = SOSRequest.objects.filter(accepted_by=hospital)
+
     nearby_sos = []
 
     for sos in pending_sos:
+
         if hospital.latitude and hospital.longitude:
+
             distance = calculate_distance(
                 hospital.latitude,
                 hospital.longitude,
@@ -79,7 +84,48 @@ def hospital_sos_list(request):
                 sos.longitude
             )
 
-            if distance <= 10:  # 10 km radius
+            if distance <= 10:
                 nearby_sos.append(sos)
 
-    return render(request, "sos/hospital_sos_list.html", {"sos_list": nearby_sos})
+        else:
+            nearby_sos.append(sos)
+
+    sos_list = list(nearby_sos) + list(accepted_sos)
+
+    return render(request, "sos/hospital_sos_list.html", {"sos_list": sos_list})
+
+
+# ---------------------------
+# Hospital Accept SOS
+# ---------------------------
+@login_required
+def accept_sos(request, sos_id):
+
+    hospital = get_object_or_404(Hospital, admin=request.user)
+
+    sos = get_object_or_404(SOSRequest, id=sos_id)
+
+    if sos.status == "PENDING":
+        sos.status = "ACCEPTED"
+        sos.accepted_by = hospital   # ✅ FIXED
+        sos.save()
+
+    return redirect("hospital_sos_list")
+
+
+# ---------------------------
+# Update Ambulance Status
+# ---------------------------
+@login_required
+def update_status(request, sos_id):
+
+    sos = get_object_or_404(SOSRequest, id=sos_id)
+
+    if request.method == "POST":
+        new_status = request.POST.get("status")
+
+        if new_status:
+            sos.status = new_status
+            sos.save()
+
+    return redirect("hospital_sos_list")

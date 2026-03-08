@@ -8,7 +8,7 @@ class SOSRequest(models.Model):
     STATUS_CHOICES = [
         ("PENDING", "Pending"),
         ("ACCEPTED", "Accepted"),
-        ("DISPATCHED", "Dispatched"),
+        ("DISPATCHED", "Ambulance Dispatched"),
         ("ON_ROUTE", "On Route"),
         ("COMPLETED", "Completed"),
     ]
@@ -18,6 +18,15 @@ class SOSRequest(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="sos_requests"
+    )
+
+    # Hospital that accepted the SOS
+    accepted_by = models.ForeignKey(
+        Hospital,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="accepted_sos"
     )
 
     # Emergency location
@@ -32,15 +41,6 @@ class SOSRequest(models.Model):
         max_length=20,
         choices=STATUS_CHOICES,
         default="PENDING"
-    )
-
-    # Hospital that accepted the SOS
-    accepted_by = models.ForeignKey(
-        Hospital,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="accepted_sos"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)

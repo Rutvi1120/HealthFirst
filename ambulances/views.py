@@ -12,3 +12,5 @@ def ambulance_status(request):
         "ambulances/ambulance_status.html",
         {"sos_requests": sos_requests}
     )
+
+    

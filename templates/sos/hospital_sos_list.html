@@ -5,16 +5,78 @@
 <h2>Nearby SOS Requests</h2>
 
 {% if sos_list %}
-    {% for sos in sos_list %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-            <p><strong>ID:</strong> {{ sos.id }}</p>
-            <p><strong>Description:</strong> {{ sos.description }}</p>
-            <p><strong>Location:</strong> {{ sos.latitude }}, {{ sos.longitude }}</p>
-            <p><strong>Status:</strong> {{ sos.status }}</p>
-        </div>
-    {% endfor %}
+
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Location</th>
+<th>Status</th>
+<th>Action</th>
+<th>Update Ambulance</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for sos in sos_list %}
+
+<tr>
+
+<td>{{ sos.id }}</td>
+
+<td>{{ sos.description }}</td>
+
+<td>{{ sos.latitude }}, {{ sos.longitude }}</td>
+
+<td>{{ sos.status }}</td>
+
+<td>
+
+{% if sos.status == "pending" %}
+
+<a href="{% url 'accept_sos' sos.id %}" class="btn btn-primary">
+Accept SOS
+</a>
+
 {% else %}
-    <p>No nearby SOS requests.</p>
+
+Accepted by {{ sos.assigned_hospital.name }}
+
+{% endif %}
+
+</td>
+
+<td>
+
+<form method="POST" action="{% url 'update_status' sos.id %}">
+{% csrf_token %}
+
+<select name="status">
+<option value="ACCEPTED">Accepted</option>
+<option value="DISPATCHED">Ambulance Dispatched</option>
+<option value="ON_ROUTE">On Route</option>
+<option value="COMPLETED">Completed</option>
+</select>
+
+<button type="submit">Update</button>
+
+</form>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<p>No nearby SOS requests.</p>
+
 {% endif %}
 
 {% endblock %}
