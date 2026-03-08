@@ -10,8 +10,8 @@
         <a href="{% url 'hospital_sos_list' %}">SOS Requests</a>
         <a href="#">Ambulances</a>
         <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
-        <a href="{% url 'hospitals:manage_bloods' %}">Blood Bank</a>
-        <a href="{% url 'hospitals:view_feedback' %}">Feedback</a>
+        <a href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+        <a href="{% url 'feedback:view_feedback' %}">Feedback</a>
       </nav>
     </aside>
 
@@ -51,13 +51,13 @@
         <div class="card">
           <h3>Blood Bank</h3>
           <p>Update blood group stock and availability.</p>
-          <a class="link" href="{% url 'hospitals:manage_bloods' %}">Update</a>
+          <a class="link" href="{% url 'bloodbank:manage_bloods' %}">Update</a>
         </div>
 
         <div class="card">
           <h3>Feedback</h3>
           <p>View feedback submitted by citizens.</p>
-          <a class="link" href="{% url 'hospitals:view_feedback' %}">View</a>
+          <a class="link" href="{% url 'feedback:view_feedback' %}">View</a>
         </div>
       </div>
     </main>

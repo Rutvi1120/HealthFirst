@@ -17,7 +17,7 @@
         <!-- ✅ FIXED ALERTS LINK -->
         <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
 
-        <a href="{% url 'hospitals:submit_feedback' %}">Feedback</a>
+        <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
       </nav>
     </aside>
 
@@ -55,7 +55,7 @@
         <div class="card">
           <h3>Blood Availability</h3>
           <p>Search blood stock by group across hospitals.</p>
-          <a class="link" href="{% url 'hospitals:view_bloods' %}">Search</a>
+          <a class="link" href="{% url 'bloodbank:view_bloods' %}">Search</a>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
         <div class="card">
           <h3>Feedback</h3>
           <p>Share your experience or concerns directly with the hospital through feedback</p>
-          <a class="link" href="{% url 'hospitals:submit_feedback' %}">View</a>
+          <a class="link" href="{% url 'feedback:submit_feedback' %}">View</a>
         </div>
       </div>
 

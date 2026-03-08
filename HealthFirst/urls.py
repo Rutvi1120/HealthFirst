@@ -9,4 +9,6 @@ urlpatterns = [
     path('alerts/', include('alerts.urls')),
     path('hospitals/', include('hospitals.urls')),
     path('sos/', include('sos.urls')),
+    path('bloodbank/', include('bloodbank.urls')),
+    path('feedback/', include('feedback.urls')),
 ]

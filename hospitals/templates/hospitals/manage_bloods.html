@@ -12,7 +12,7 @@
         <a href="#">SOS Requests</a>
         <a href="#">Ambulances</a>
         <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
-        <a class="active" href="{% url 'hospitals:manage_bloods' %}">Blood Bank</a>
+        <a class="active" href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
         <a href="#">Feedback</a>
       </nav>
     </aside>
@@ -38,7 +38,7 @@
     </div>
 
     <div>
-      <a href="{% url 'hospitals:view_bloods' %}" class="btn btn-secondary">
+      <a href="{% url 'bloodbank:view_bloods' %}" class="btn btn-secondary">
         View Blood Stock
       </a>
     </div>
