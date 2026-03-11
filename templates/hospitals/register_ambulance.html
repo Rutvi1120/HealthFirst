@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Register Ambulance - HealthFirst{% endblock %}
+
+{% block content %}
+<section class="dash">
+  <div class="container dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Hospital Panel</div>
+      <nav class="dash-menu">
+        <a href="{% url 'hospitals:hospital_dashboard' %}">Overview</a>
+        <a href="{% url 'hospital_sos_list' %}">SOS Requests</a>
+        <a class="active" href="{% url 'ambulance_status' %}">Ambulances</a>
+        <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+        <a href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+        <a href="{% url 'hospitals:upload_report' %}">Upload Medical Report</a>
+        <a href="{% url 'hospitals:verify_report' %}">Verify Medical Report</a>
+        <a href="{% url 'feedback:view_feedback' %}">Feedback</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dash-main">
+
+      <div class="dash-head">
+        <div>
+          <h1>Register Ambulance</h1>
+          <p class="muted">Add a new ambulance for your hospital.</p>
+        </div>
+      </div>
+
+      <!-- Form Card -->
+      <div class="card" style="max-width:420px;">
+
+        <form method="POST" class="form-grid">
+          {% csrf_token %}
+
+          <label>Vehicle Number</label>
+          {{ form.vehicle_number }}
+
+          <label>Driver Name</label>
+          {{ form.driver_name }}
+
+          <label>Driver Mobile</label>
+          {{ form.driver_mobile }}
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px;">
+            Register Ambulance
+          </button>
+
+        </form>
+
+      </div>
+
+      <br>
+
+      <a href="{% url 'ambulance_status' %}" class="btn btn-secondary">
+        View Ambulances
+      </a>
+
+    </main>
+
+  </div>
+</section>
+{% endblock %}

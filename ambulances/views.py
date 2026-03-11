@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from sos.models import SOSRequest
+from hospitals.models import Ambulance
+from hospitals.models import Hospital
 
-@login_required
 def ambulance_status(request):
 
-    sos_requests = SOSRequest.objects.filter(citizen=request.user).order_by("-created_at")
+    hospital = Hospital.objects.filter(admin=request.user).first()
 
-    return render(
-        request,
-        "ambulances/ambulance_status.html",
-        {"sos_requests": sos_requests}
-    )
+    ambulances = Ambulance.objects.filter(hospital=hospital)
+
+    return render(request, "ambulances/ambulance_status.html", {
+        "ambulances": ambulances
+    })
 
     

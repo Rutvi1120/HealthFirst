@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Hospital, BedAvailability
 from .forms import BedAvailabilityForm
+from .models import Ambulance
+from .forms import AmbulanceForm
+from django.shortcuts import render, redirect
+from accounts.models import Profile
+
 
 @login_required
 def hospital_dashboard(request):
@@ -127,3 +132,31 @@ def verify_report(request):
             result = "Report not found in database"
 
     return render(request,"hospitals/verify_report.html",{"result":result})
+
+from .models import Ambulance, Hospital
+from .forms import AmbulanceForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+
+@login_required
+def register_ambulance(request):
+
+    hospital = Hospital.objects.filter(admin=request.user).first()
+
+    if request.method == "POST":
+
+        form = AmbulanceForm(request.POST)
+
+        if form.is_valid():
+            ambulance = form.save(commit=False)
+            ambulance.hospital = hospital
+            ambulance.save()
+
+            return redirect("ambulance_status")
+
+    else:
+        form = AmbulanceForm()
+
+    return render(request, "hospitals/register_ambulance.html", {"form": form})
+

@@ -35,3 +35,21 @@ class MedicalReport(models.Model):
 
     def __str__(self):
         return self.patient_name
+    
+class Ambulance(models.Model):
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+    vehicle_number = models.CharField(max_length=50)
+    driver_name = models.CharField(max_length=100)
+    driver_mobile = models.CharField(max_length=15)
+
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ("AVAILABLE", "Available"),
+            ("BUSY", "Busy"),
+        ],
+        default="AVAILABLE"
+    )
+
+    def __str__(self):
+        return f"{self.vehicle_number} - {self.hospital.name}"

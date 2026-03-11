@@ -16,5 +16,5 @@ urlpatterns = [
 
     path('submit-feedback/', views.submit_feedback, name='submit_feedback'),
     path('view-feedback/', views.view_feedback, name='view_feedback'),
-
+    path("register-ambulance/", views.register_ambulance, name="register_ambulance"),
 ]
