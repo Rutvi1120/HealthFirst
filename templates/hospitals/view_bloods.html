@@ -2,46 +2,167 @@
 {% block title %}Blood Availability{% endblock %}
 
 {% block content %}
-<section class="container">
-  <h1>Blood Availability Across Hospitals</h1>
 
-  {% if blood_list %}
-  <div class="card" style="overflow-x:auto;">
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-      <thead style="background-color:#f2f2f2;">
-        <tr>
-          <th>Hospital</th>
-          <th>A+</th>
-          <th>A-</th>
-          <th>B+</th>
-          <th>B-</th>
-          <th>O+</th>
-          <th>O-</th>
-          <th>AB+</th>
-          <th>AB-</th>
-          <th>Last Updated</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for blood in blood_list %}
-        <tr>
-          <td>{{ blood.hospital }}</td>
-          <td>{{ blood.a_positive }}</td>
-          <td>{{ blood.a_negative }}</td>
-          <td>{{ blood.b_positive }}</td>
-          <td>{{ blood.b_negative }}</td>
-          <td>{{ blood.o_positive }}</td>
-          <td>{{ blood.o_negative }}</td>
-          <td>{{ blood.ab_positive }}</td>
-          <td>{{ blood.ab_negative }}</td>
-          <td>{{ blood.last_updated }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-    <p>No blood data available.</p>
-  {% endif %}
+<style>
+
+/* Dashboard layout */
+
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
+
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+
+/* Card */
+
+.blood-card{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Table styling */
+
+.blood-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.blood-table th{
+    background:#f1f5f9;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+}
+
+.blood-table td{
+    padding:12px;
+    border-top:1px solid #e5e7eb;
+}
+
+.blood-table tr:hover{
+    background:#f9fafb;
+}
+
+/* Dropdown */
+
+.filter-box{
+    margin-bottom:20px;
+}
+
+.filter-box select{
+    padding:8px 10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+}
+
+</style>
+
+
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+
+<aside class="dash-sidebar">
+
+<div class="dash-brand">Citizen Panel</div>
+
+<nav class="dash-menu">
+<a href="{% url 'dashboard' %}">Overview</a>
+<a href="{% url 'raise_sos' %}">Create SOS</a>
+<a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+<a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+<a class="active" href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+<a href="{% url 'my_reports' %}">Medical Reports</a>
+<a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+<a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+</nav>
+
+</aside>
+
+
+<!-- Main Content -->
+
+<div class="dash-content">
+
+<div class="dash-head">
+<h1>Blood Availability Across Hospitals</h1>
+<p class="muted">Check live blood stock from registered hospitals.</p>
+</div>
+
+
+{% if blood_list %}
+
+<div class="blood-card">
+
+<table class="blood-table">
+
+<thead>
+<tr>
+<th>Hospital</th>
+<th>A+</th>
+<th>A-</th>
+<th>B+</th>
+<th>B-</th>
+<th>O+</th>
+<th>O-</th>
+<th>AB+</th>
+<th>AB-</th>
+<th>Last Updated</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for blood in blood_list %}
+
+<tr>
+<td>{{ blood.hospital }}</td>
+
+<td>{{ blood.a_positive }}</td>
+<td>{{ blood.a_negative }}</td>
+<td>{{ blood.b_positive }}</td>
+<td>{{ blood.b_negative }}</td>
+<td>{{ blood.o_positive }}</td>
+<td>{{ blood.o_negative }}</td>
+<td>{{ blood.ab_positive }}</td>
+<td>{{ blood.ab_negative }}</td>
+
+<td>{{ blood.last_updated|date:"d M Y, H:i" }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% else %}
+
+<div class="blood-card">
+<p>No blood data available.</p>
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
 </section>
+
 {% endblock %}

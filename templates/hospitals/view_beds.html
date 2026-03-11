@@ -2,53 +2,182 @@
 {% block title %}Hospital Bed Availability - HealthFirst{% endblock %}
 
 {% block content %}
+
+<style>
+
+/* Dashboard layout */
+
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
+
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+
+/* Card */
+
+.bed-card{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Table */
+
+.bed-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.bed-table th{
+    background:#f1f5f9;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+}
+
+.bed-table td{
+    padding:12px;
+    border-top:1px solid #e5e7eb;
+}
+
+.bed-table tr:hover{
+    background:#f9fafb;
+}
+
+/* Dropdown */
+
+.filter-box{
+    margin-bottom:20px;
+}
+
+.filter-box select{
+    padding:8px 10px;
+    border-radius:6px;
+    border:1px solid #ddd;
+}
+
+</style>
+
+
 <section class="dash">
-  <div class="container">
+<div class="container dash-layout">
 
-    <div class="dash-content" style="max-width:1000px; margin:0 auto;">
+<!-- Sidebar -->
 
-      <!-- Header -->
-      <div class="dash-head text-center">
-        <div>
-          <h1>Hospital Bed Availability</h1>
-          <p class="muted">Live availability from all registered hospitals.</p>
-        </div>
-      </div>
+<aside class="dash-sidebar">
 
-      <!-- Table -->
-      <div class="card">
-         <table border="1" cellpadding="10" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th>Hospital</th>
-              <th>ICU</th>
-              <th>Oxygen</th>
-              <th>General</th>
-              <th>Last Updated</th>
-            </tr>
-          </thead>
+<div class="dash-brand">Citizen Panel</div>
 
-          <tbody>
-            {% for bed in beds %}
-            <tr>
-              <td>{{ bed.hospital }}</td>
-              <td>{{ bed.icu_beds }}</td>
-              <td>{{ bed.oxygen_beds }}</td>
-              <td>{{ bed.general_beds }}</td>
-              <td>{{ bed.last_updated|date:"d M Y, H:i" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-              <td colspan="5" class="muted text-center">
-                No hospital data available.
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+<nav class="dash-menu">
+<a href="{% url 'dashboard' %}">Overview</a>
+<a href="{% url 'raise_sos' %}">Create SOS</a>
+<a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+<a class="active" href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+<a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+<a href="{% url 'my_reports' %}">Medical Reports</a>
+<a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+<a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+</nav>
 
-    </div>
-  </div>
+</aside>
+
+
+<!-- Main Content -->
+
+<div class="dash-content">
+
+<div class="dash-head">
+<h1>Hospital Bed Availability</h1>
+<p class="muted">Check live availability from registered hospitals.</p>
+</div>
+
+
+<!-- Hospital Dropdown -->
+
+<div class="filter-box">
+
+<form method="GET">
+
+<label>Select Hospital:</label>
+
+<select name="hospital" onchange="this.form.submit()">
+
+<option value="">All Hospitals</option>
+
+{% for hospital in hospitals %}
+
+<option value="{{ hospital.id }}"
+{% if request.GET.hospital == hospital.id|stringformat:"s" %}selected{% endif %}>
+{{ hospital.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</form>
+
+</div>
+
+
+<!-- Bed Table -->
+
+<div class="bed-card">
+
+<table class="bed-table">
+
+<thead>
+<tr>
+<th>Hospital</th>
+<th>ICU Beds</th>
+<th>Oxygen Beds</th>
+<th>General Beds</th>
+<th>Last Updated</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for bed in beds %}
+
+<tr>
+<td>{{ bed.hospital }}</td>
+<td>{{ bed.icu_beds }}</td>
+<td>{{ bed.oxygen_beds }}</td>
+<td>{{ bed.general_beds }}</td>
+<td>{{ bed.last_updated|date:"d M Y, H:i" }}</td>
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5" style="text-align:center;padding:20px;">
+No hospital data available.
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
 </section>
+
 {% endblock %}

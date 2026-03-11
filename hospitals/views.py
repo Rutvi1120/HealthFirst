@@ -28,8 +28,20 @@ def manage_beds(request):
 
 
 def view_beds(request):
-    beds = BedAvailability.objects.select_related('hospital').all()
-    return render(request, 'hospitals/view_beds.html', {'beds': beds})
+
+    hospital_id = request.GET.get("hospital")
+
+    beds = BedAvailability.objects.all()
+
+    if hospital_id:
+        beds = beds.filter(hospital_id=hospital_id)
+
+    hospitals = Hospital.objects.all()
+
+    return render(request, "hospitals/view_beds.html", {
+        "beds": beds,
+        "hospitals": hospitals
+    })
 
 def view_bloods(request):
     return render(request, "hospitals/view_bloods.html")

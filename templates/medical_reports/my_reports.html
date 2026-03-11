@@ -4,38 +4,26 @@
 
 {% block content %}
 
-<div style="max-width:800px;margin:auto;padding:30px">
-
-<h2 style="margin-bottom:20px">My Medical Reports</h2>
-
-<a href="{% url 'upload_report' %}" class="btn-upload">
-Upload New Report
-</a>
-
-{% for report in reports %}
-
-<div class="report-card">
-
-    <div class="report-info">
-        <h3>{{ report.title }}</h3>
-        
-    </div>
-
-    <a href="{{ report.report_file.url }}" class="view-btn" target="_blank">
-        View Report
-    </a>
-
-</div>
-
-{% empty %}
-
-<p>No reports uploaded yet.</p>
-
-{% endfor %}
-
-</div>
-
 <style>
+
+/* Dashboard layout */
+
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
+
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+
+/* Upload button */
 
 .btn-upload{
 background:#2c7be5;
@@ -45,22 +33,33 @@ border-radius:6px;
 text-decoration:none;
 display:inline-block;
 margin-bottom:20px;
+font-weight:600;
 }
+
+.btn-upload:hover{
+background:#1a68d1;
+}
+
+/* Report cards */
 
 .report-card{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#f4f6f9;
+background:#ffffff;
 padding:18px;
-border-radius:8px;
+border-radius:10px;
 margin-bottom:15px;
-box-shadow:0 2px 6px rgba(0,0,0,0.08);
+box-shadow:0 3px 8px rgba(0,0,0,0.06);
+border:1px solid #eef2f7;
 }
 
 .report-info h3{
 margin:0;
+font-size:18px;
 }
+
+/* View button */
 
 .view-btn{
 background:#28a745;
@@ -68,8 +67,78 @@ color:white;
 padding:8px 14px;
 border-radius:6px;
 text-decoration:none;
+font-size:14px;
+}
+
+.view-btn:hover{
+background:#1e7e34;
 }
 
 </style>
+
+
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+
+<aside class="dash-sidebar">
+
+<div class="dash-brand">Citizen Panel</div>
+
+<nav class="dash-menu">
+<a href="{% url 'dashboard' %}">Overview</a>
+<a href="{% url 'raise_sos' %}">Create SOS</a>
+<a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+<a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+<a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+<a class="active" href="{% url 'my_reports' %}">Medical Reports</a>
+<a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+<a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+</nav>
+
+</aside>
+
+
+<!-- Main Content -->
+
+<div class="dash-content">
+
+<div class="dash-head">
+<h1>My Medical Reports</h1>
+<p class="muted">View and manage your uploaded medical reports.</p>
+</div>
+
+<a href="{% url 'upload_report' %}" class="btn-upload">
+Upload New Report
+</a>
+
+
+{% for report in reports %}
+
+<div class="report-card">
+
+<div class="report-info">
+<h3>{{ report.title }}</h3>
+</div>
+
+<a href="{{ report.report_file.url }}" class="view-btn" target="_blank">
+View Report
+</a>
+
+</div>
+
+{% empty %}
+
+<div class="card" style="padding:20px">
+<p>No reports uploaded yet.</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+</section>
 
 {% endblock %}

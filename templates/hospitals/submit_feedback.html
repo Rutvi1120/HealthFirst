@@ -2,17 +2,82 @@
 {% block title %}Submit Feedback{% endblock %}
 
 {% block content %}
-<section class="container">
-  <h1>Submit Feedback</h1>
 
-  <div class="card" style="max-width:600px;">
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">
-        Submit Feedback
-      </button>
-    </form>
+<section class="dash">
+  <div class="container dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+
+      <div class="dash-brand">Citizen Panel</div>
+
+      <nav class="dash-menu">
+            <a href="{% url 'dashboard' %}">Overview</a>
+            <a href="{% url 'raise_sos' %}">Create SOS</a>
+            <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+            <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+            <a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+            <a href="{% url 'my_reports' %}">Medical Reports</a>
+            <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+            <a href="{% url 'feedback:submit_feedback' %}" class="active">Feedback</a>
+      </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <div class="dash-content">
+
+      <div class="dash-head">
+        <h1>Submit Feedback</h1>
+        <p class="muted">We appreciate your feedback to improve our services.</p>
+      </div>
+
+      <div class="card dash-card">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary btn-block">
+            Submit Feedback
+          </button>
+        </form>
+      </div>
+
+    </div>
   </div>
 </section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Card form styling */
+.dash-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;          /* spacing between fields */
+}
+
+.dash-card form input,
+.dash-card form select,
+.dash-card form textarea {
+    padding: 8px 10px;
+    font-size: 0.95em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dash-card form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.dash-card form button {
+    max-width: 200px;   /* make submit button smaller */
+    align-self: flex-start; /* align left instead of stretching */
+    padding: 8px 16px;
+    font-size: 0.95em;
+}
+</style>
 {% endblock %}

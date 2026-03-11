@@ -2,13 +2,65 @@
 {% block title %}Citizen Dashboard - HealthFirst{% endblock %}
 
 {% block content %}
+
+<style>
+/* Big SOS Button */
+.big-sos-btn{
+    display:inline-block;
+    padding:22px 45px;
+    font-size:22px;
+    font-weight:600;
+    background:#e53935;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    margin:25px 0;
+}
+
+.big-sos-btn:hover{
+    background:#c62828;
+}
+
+/* Alert Boxes */
+.alert-box{
+    background:#ffffff;
+    padding:16px;
+    border-radius:8px;
+    margin-bottom:15px;
+    border-left:5px solid #4caf50;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.alert-box.critical{
+    border-left-color:#e53935;
+}
+
+.alert-box.medium{
+    border-left-color:#fb8c00;
+}
+
+.alert-box.low{
+    border-left-color:#43a047;
+}
+
+.alert-box h4{
+    margin:0 0 6px 0;
+}
+
+.alert-box small{
+    color:#666;
+}
+</style>
+
 <section class="dash">
-  <div class="container dash-layout">
+<div class="container dash-layout">
 
-    <aside class="dash-sidebar">
-      <div class="dash-brand">Citizen Panel</div>
+<!-- Sidebar -->
+<aside class="dash-sidebar">
 
-      <nav class="dash-menu">
+  <div class="dash-brand">Citizen Panel</div>
+
+  <nav class="dash-menu">
         <a class="active" href="{% url 'dashboard' %}">Overview</a>
         <a href="{% url 'raise_sos' %}">Create SOS</a>
         <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
@@ -17,72 +69,42 @@
         <a href="{% url 'my_reports' %}">Medical Reports</a>
         <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
         <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
-      </nav>
-    </aside>
+  </nav>
 
-    <main class="dash-main">
+</aside>
 
-      <div class="dash-head-center">
-        <h1>Citizen Dashboard</h1>
-        <p class="muted">Use SOS in case of emergency. Stay updated with health alerts.</p>
-      </div>
 
-      <!-- BIG SOS BUTTON -->
-      <div class="sos-center">
-        <a class="big-sos-btn" href="{% url 'raise_sos' %}">
-          🚨 EMERGENCY SOS
-        </a>
-      </div>
+<!-- Main Content -->
+<main class="dash-main">
 
-      <!-- ALERTS SECTION -->
-      <div class="alerts-area">
-        <h2>Health Alerts</h2>
+<div class="dash-head">
+<h1>Citizen Dashboard</h1>
+<p class="muted">Use SOS in case of emergency. Stay updated with health alerts.</p>
+</div>
 
-        {% for alert in alerts %}
-          <div class="alert-box">
-            <h4>{{ alert.title }}</h4>
-            <p>{{ alert.description }}</p>
-            <small>{{ alert.created_at }}</small>
-          </div>
-        {% empty %}
-          <p class="muted">No alerts available right now.</p>
-        {% endfor %}
-      </div>
 
-      <!-- CARDS SECTION -->
-      <div class="grid-2">
-        <div class="card">
-          <h3>Bed Availability</h3>
-          <p>Check ICU/Oxygen/General bed availability across hospitals.</p>
-          <a class="link" href="{% url 'hospitals:view_beds' %}">Search</a>
-        </div>
+<!-- BIG SOS BUTTON -->
+<a class="big-sos-btn" href="{% url 'raise_sos' %}">
+🚨 EMERGENCY SOS
+</a>
 
-        <div class="card">
-          <h3>Blood Availability</h3>
-          <p>Search blood stock by group across hospitals.</p>
-          <a class="link" href="{% url 'bloodbank:view_bloods' %}">Search</a>
-        </div>
 
-        <div class="card">
-          <h3>Medical Reports</h3>
-          <p>Upload/view reports with integrity verification.</p>
-          <a class="link" href="{% url 'my_reports' %}">Manage</a>
-        </div>
+<!-- HEALTH ALERTS -->
+<h2>Active Health Alerts</h2>
 
-        <div class="card">
-          <h3>Health Alerts</h3>
-          <p>View active alerts and emergency guidance.</p>
-          <a class="link" href="{% url 'citizen_alerts' %}">View</a>
-        </div>
+{% for alert in alerts %}
+<div class="alert-box {% if alert.severity == 'CRITICAL' %}critical{% elif alert.severity == 'MEDIUM' %}medium{% else %}low{% endif %}">
+    <h4>{{ alert.title }}</h4>
+    <p>{{ alert.message }}</p>
+    <small>{{ alert.created_at|date:"M d, Y, g:i a" }}</small>
+</div>
+{% empty %}
+<p class="muted">No health alerts right now.</p>
+{% endfor %}
 
-        <div class="card">
-          <h3>Feedback</h3>
-          <p>Share your experience or concerns directly with the hospital through feedback.</p>
-          <a class="link" href="{% url 'feedback:submit_feedback' %}">View</a>
-        </div>
-      </div>
+</main>
 
-    </main>
-  </div>
+</div>
 </section>
+
 {% endblock %}

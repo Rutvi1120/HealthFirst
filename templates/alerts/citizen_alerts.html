@@ -1,38 +1,108 @@
-{% extends "base.html" %}
-{% block title %}Health Alerts{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container" style="padding: 20px;">
-  <h2 style="margin-bottom: 20px;">🚨 Active Health Alerts</h2>
 
-  {% for alert in alerts %}
-    <div style="
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      border-left: 6px solid
-        {% if alert.severity == 'CRITICAL' %}red
-        {% elif alert.severity == 'MEDIUM' %}orange
-        {% else %}green
-        {% endif %};
-      background-color: #f9f9f9;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    ">
+<style>
+/* Dashboard layout */
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
 
-      <h3 style="margin: 0;">{{ alert.title }}</h3>
+/* Sidebar */
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
 
-      <p style="margin-top: 10px;">{{ alert.message }}</p>
+.dash-sidebar .dash-brand{
+    font-weight:bold;
+    font-size:1.3em;
+    margin-bottom:15px;
+}
 
-      <small style="color: gray;">
-        Severity: <strong>{{ alert.severity }}</strong> |
-        Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}
-      </small>
+/* Main content */
+.dash-content{
+    flex:1;
+}
 
-    </div>
+.dash-head h1{
+    margin:0;
+}
 
-  {% empty %}
-    <p>No active alerts available.</p>
-  {% endfor %}
+.dash-head .muted{
+    color:gray;
+    font-size:0.95em;
+    margin-bottom:20px;
+}
+
+/* Alert card styling */
+.alert-card{
+    background-color:#fff;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    border-left:6px solid green;
+    max-width:520px;
+}
+
+.alert-card.critical{ border-left-color:red; }
+.alert-card.medium{ border-left-color:orange; }
+.alert-card.low{ border-left-color:green; }
+
+.alert-card h3{ margin:0 0 10px 0; }
+.alert-card p{ margin:0 0 8px 0; }
+.alert-card small{ color:gray; font-size:0.85em; }
+
+</style>
+
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+<aside class="dash-sidebar">
+
+  <div class="dash-brand">Citizen Panel</div>
+
+  <nav class="dash-menu">
+        <a href="{% url 'dashboard' %}">Overview</a>
+        <a href="{% url 'raise_sos' %}">Create SOS</a>
+        <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+        <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+        <a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+        <a href="{% url 'my_reports' %}">Medical Reports</a>
+        <a href="{% url 'citizen_alerts' %}" class="active">Health Alerts</a>
+        <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+  </nav>
+
+</aside>
+
+<!-- Main Content -->
+<div class="dash-content">
+
+<div class="dash-head">
+<h1>🚨 Active Health Alerts</h1>
+<p class="muted">Stay informed about current health alerts in your area.</p>
+</div>
+
+{% for alert in alerts %}
+  <div class="alert-card {% if alert.severity == 'CRITICAL' %}critical{% elif alert.severity == 'MEDIUM' %}medium{% else %}low{% endif %}">
+    <h3>{{ alert.title }}</h3>
+    <p>{{ alert.message }}</p>
+    <small>
+      Severity: <strong>{{ alert.severity }}</strong> |
+      Posted on {{ alert.created_at|date:"M d, Y, g:i a" }}
+    </small>
+  </div>
+{% empty %}
+  <p>No active alerts available.</p>
+{% endfor %}
 
 </div>
+
+</div>
+</section>
+
 {% endblock %}
