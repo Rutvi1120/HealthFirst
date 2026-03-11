@@ -1,34 +1,169 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 <section class="auth">
-  <div class="container auth-grid">
-    <div class="auth-info">
-      <div class="eyebrow">Join HealthFirst</div>
-      <h2>Create a secure account in minutes</h2>
-      <p>Register to access emergency workflows, live capacity tracking, and verified updates.</p>
-      <div class="auth-points">
-        <div class="auth-point">Coordinate SOS response</div>
-        <div class="auth-point">Monitor beds and blood stock</div>
-        <div class="auth-point">Stay aligned with alerts</div>
+  <div class="container">
+
+<div class="auth-card">
+
+  <div class="auth-card-head">
+    <div class="eyebrow">Join HealthFirst</div>
+    <h2>Create a secure account in minutes</h2>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert-message">
+        {{ message }}
       </div>
-    </div>
-    <div class="auth-card">
-      <div class="auth-card-head">
-        <h3>Register</h3>
-        <p>Fill in the details to activate your account.</p>
+    {% endfor %}
+  {% endif %}
+
+  {% if form.errors %}
+  <div class="alert-message">
+    {{ form.errors }}
+  </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-grid">
+
+      <label>Username</label>
+      {{ form.username }}
+
+      <label>Email</label>
+      {{ form.email }}
+
+      <label>Password</label>
+      {{ form.password }}
+
+      <label>Confirm Password</label>
+      {{ form.confirm_password }}
+
+      <label>Role</label>
+      {{ form.role }}
+
+      <label>Mobile</label>
+      {{ form.mobile }}
+
+      <label>ID Proof</label>
+      {{ form.id_proof }}
+
+      <div id="hospital-field">
+        <label>Select Hospital</label>
+        {{ form.hospital }}
       </div>
-      <form method="post">
-        {% csrf_token %}
-        <div class="form-grid">
-          {{ form.as_p }}
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">Create account</button>
-        <div class="auth-footer">
-          <span>Already registered?</span>
-          <a class="btn btn-ghost btn-sm" href="{% url 'login' %}">Login</a>
-        </div>
-      </form>
+
     </div>
+
+    <button class="btn btn-primary btn-block" type="submit">
+      Create account
+    </button>
+
+    <div class="auth-footer">
+      <span>Already registered?</span>
+      <a class="btn btn-ghost btn-sm" href="{% url 'login' %}">Login</a>
+    </div>
+
+  </form>
+
+</div>
+
   </div>
 </section>
+
+
+<script>
+const roleField = document.getElementById("id_role");
+const hospitalField = document.getElementById("hospital-field");
+
+function toggleHospitalField(){
+    if(roleField.value === "HOSPITAL"){
+        hospitalField.style.display = "block";
+    } else {
+        hospitalField.style.display = "none";
+    }
+}
+
+toggleHospitalField();
+roleField.addEventListener("change", toggleHospitalField);
+</script>
+
+
+<style>
+
+/* Register Form Styling */
+
+.auth {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 25px 30px;
+}
+
+.auth-card-head {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-card-head .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+.auth-card-head h2 {
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-grid label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-grid input,
+.form-grid select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.alert-message{
+    background:#ffe5e5;
+    color:#a10000;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:5px;
+    font-size:14px;
+}
+
+</style>
+
 {% endblock %}
