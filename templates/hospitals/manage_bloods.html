@@ -8,12 +8,14 @@
     <aside class="dash-sidebar">
       <div class="dash-brand">Hospital Panel</div>
       <nav class="dash-menu">
-        <a href="#">Overview</a>
-        <a href="#">SOS Requests</a>
-        <a href="#">Ambulances</a>
-        <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
-        <a class="active" href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
-        <a href="#">Feedback</a>
+    <a href="{% url 'hospitals:hospital_dashboard' %}">Overview</a>
+    <a href="{% url 'hospital_sos_list' %}">SOS Requests</a>
+    <a href="{% url 'ambulance_status' %}">Ambulances</a>
+    <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+    <a class="active" href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+    <a href="{% url 'hospitals:upload_report' %}">Upload Medical Report</a>
+    <a href="{% url 'hospitals:verify_report' %}">Verify Medical Report</a>
+    <a href="{% url 'feedback:view_feedback' %}">Feedback</a>
       </nav>
     </aside>
 

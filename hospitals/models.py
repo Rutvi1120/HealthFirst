@@ -23,3 +23,15 @@ class BedAvailability(models.Model):
 
     def __str__(self):
         return f"{self.hospital.name} Bed Status"
+
+class MedicalReport(models.Model):
+    patient_name = models.CharField(max_length=100)
+    report_type = models.CharField(max_length=100)
+    report_date = models.DateField()
+
+    report_file = models.FileField(upload_to='reports/')
+
+    report_hash = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.patient_name

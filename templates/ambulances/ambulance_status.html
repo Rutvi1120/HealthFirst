@@ -4,13 +4,113 @@
 
 {% block content %}
 
-<section class="dash">
-<div class="container">
+<style>
+/* Layout fix */
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
 
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+
+/* Card */
+.status-card{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Table styling */
+.status-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.status-table th{
+    background:#f1f5f9;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+}
+
+.status-table td{
+    padding:12px;
+    border-top:1px solid #e5e7eb;
+}
+
+.status-table tr:hover{
+    background:#f9fafb;
+}
+
+/* Status badges */
+.badge{
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.badge.pending{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.badge.accepted{
+    background:#d4edda;
+    color:#155724;
+}
+
+.badge.completed{
+    background:#d1ecf1;
+    color:#0c5460;
+}
+</style>
+
+
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+<aside class="dash-sidebar">
+
+<div class="dash-brand">Citizen Panel</div>
+
+<nav class="dash-menu">
+<a href="{% url 'dashboard' %}">Overview</a>
+<a href="{% url 'raise_sos' %}">Create SOS</a>
+<a class="active" href="{% url 'ambulance_status' %}">Ambulance Status</a>
+<a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+<a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+<a href="{% url 'my_reports' %}">Medical Reports</a>
+<a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+<a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+</nav>
+
+</aside>
+
+
+<!-- Main Content -->
+<div class="dash-content">
+
+<div class="dash-head">
 <h1>Ambulance Status</h1>
 <p class="muted">Track ambulance assigned to your SOS request.</p>
+</div>
 
-<table class="table" border="1">
+<div class="status-card">
+
+<table class="status-table">
+
 <thead>
 <tr>
 <th>SOS ID</th>
@@ -26,23 +126,45 @@
 {% for sos in sos_requests %}
 
 <tr>
-<td>{{ sos.id }}</td>
-<td>{{ sos.latitude }}, {{ sos.longitude }}</td>
-<td>{{ sos.status }}</td>
-<td>{{ sos.accepted_by }}</td>
-<td>{{ sos.created_at }}</td>
+<td>#{{ sos.id }}</td>
+
+<td>
+{{ sos.latitude }}, {{ sos.longitude }}
+</td>
+
+<td>
+<span class="badge {{ sos.status|lower }}">
+{{ sos.status }}
+</span>
+</td>
+
+<td>
+{{ sos.accepted_by|default:"Not Assigned" }}
+</td>
+
+<td>
+{{ sos.created_at|date:"d M Y, H:i" }}
+</td>
+
 </tr>
 
 {% empty %}
 
 <tr>
-<td colspan="5">No SOS requests yet.</td>
+<td colspan="5" style="text-align:center;padding:20px;">
+No SOS requests yet.
+</td>
 </tr>
 
 {% endfor %}
 
 </tbody>
+
 </table>
+
+</div>
+
+</div>
 
 </div>
 </section>

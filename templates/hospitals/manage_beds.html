@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Hospital Dashboard - HealthFirst{% endblock %}
+
+{% block content %}
+<style>
+/* Fix layout only for manage beds page */
+
+.dash-layout{
+    display:flex !important;
+    align-items:flex-start;
+    gap:25px;
+}
+
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+</style>
+<section class="dash">
+  <div class="container dash-layout">
+
+
+<!-- SIDEBAR (LEFT) -->
+<aside class="dash-sidebar">
+  <div class="dash-brand">Hospital Panel</div>
+
+  <nav class="dash-menu">
+    <a href="{% url 'hospitals:hospital_dashboard' %}">Overview</a>
+    <a href="{% url 'hospital_sos_list' %}">SOS Requests</a>
+    <a href="{% url 'ambulance_status' %}">Ambulances</a>
+    <a class="active" href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+    <a href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+    <a href="{% url 'hospitals:upload_report' %}">Upload Medical Report</a>
+    <a href="{% url 'hospitals:verify_report' %}">Verify Medical Report</a>
+    <a href="{% url 'feedback:view_feedback' %}">Feedback</a>
+  </nav>
+</aside>
+
+
+<!-- MAIN CONTENT (RIGHT) -->
+<div class="dash-content">
+
+  <div class="dash-head">
+    <h1>Manage Bed Availability</h1>
+    <p class="muted">View and update ICU, Oxygen and General beds.</p>
+  </div>
+
+  <!-- CURRENT DATA -->
+  <div class="card" style="margin-bottom:20px;">
+    <h3>Current Bed Availability</h3>
+
+    <p><strong>ICU Beds:</strong> {{ form.instance.icu_beds }}</p>
+    <p><strong>Oxygen Beds:</strong> {{ form.instance.oxygen_beds }}</p>
+    <p><strong>General Beds:</strong> {{ form.instance.general_beds }}</p>
+
+    <button class="btn btn-outline"
+onclick="toggleEditForm()">
+Edit Beds
+</button>
+  </div>
+
+  <!-- EDIT FORM -->
+  <div id="editForm" class="card" style="display:none;">
+    <form method="POST" class="form-grid">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="btn btn-primary btn-block">
+        Save Availability
+      </button>
+    </form>
+  </div>
+
+</div>
+
+  </div>
+</section>
+<script>
+function toggleEditForm() {
+    const form = document.getElementById("editForm");
+
+    if (form.style.display === "none") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
+}
+</script>
+{% endblock %}

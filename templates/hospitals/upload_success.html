@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Uploaded</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .box{
+            background:white;
+            padding:40px;
+            border-radius:10px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2{
+            color:green;
+            margin-bottom:20px;
+        }
+
+        a{
+            text-decoration:none;
+            background:#ff6a00;
+            color:white;
+            padding:10px 20px;
+            border-radius:5px;
+        }
+
+        a:hover{
+            background:#e85d00;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Report Uploaded Successfully ✅</h2>
+
+<p>The medical report has been securely stored and its hash generated.</p>
+
+<br>
+
+<a href="{% url 'hospitals:upload_report' %}">
+Upload Another Report
+</a>
+
+<br><br>
+
+<a href="{% url 'hospitals:verify_report' %}">
+Verify Medical Report
+</a>
+
+</div>
+
+</body>
+</html>

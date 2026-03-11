@@ -2,12 +2,143 @@
 
 {% block content %}
 
-<h2>Raise Emergency SOS</h2>
+<style>
+.dash-layout{
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send SOS</button>
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+
+.sos-card{
+    max-width:520px;
+}
+
+.sos-card button{
+    margin-top:15px;
+}
+</style>
+
+
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+<aside class="dash-sidebar">
+
+  <div class="dash-brand">Citizen Panel</div>
+
+  <nav class="dash-menu">
+        <a href="{% url 'dashboard' %}">Overview</a>
+        <a class="active" href="{% url 'raise_sos' %}">Create SOS</a>
+        <a href="{% url 'ambulance_status' %}">Ambulance Status</a>
+        <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+        <a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+        <a href="{% url 'my_reports' %}">Medical Reports</a>
+        <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+        <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+  </nav>
+
+</aside>
+
+
+<!-- Main Content -->
+<div class="dash-content">
+
+<div class="dash-head">
+<h1>Raise Emergency SOS</h1>
+<p class="muted">Send an emergency request to nearby hospitals.</p>
+</div>
+
+
+<div class="card sos-card">
+
+<form method="post" class="form-grid">
+
+{% csrf_token %}
+
+<label>Emergency Type</label>
+<select name="emergency_type" required>
+<option value="">Select Emergency</option>
+<option value="Accident">Accident</option>
+<option value="Heart Attack">Heart Attack</option>
+<option value="Breathing Issue">Breathing Issue</option>
+<option value="Other">Other</option>
+</select>
+
+
+<label>Description</label>
+<textarea name="description" rows="3"
+placeholder="Explain the situation briefly..." required></textarea>
+
+
+<label>Location</label>
+<button type="button" onclick="getLocation()" class="btn btn-outline">
+Get My Live Location
+</button>
+
+<p id="locationStatus" style="font-size:14px;color:gray;"></p>
+
+
+<label>Landmark / Address (Optional)</label>
+<input type="text" name="landmark"
+placeholder="Example: Near Bus Stand, Sector 12">
+
+
+<!-- Hidden fields -->
+<input type="hidden" name="latitude" id="latitude">
+<input type="hidden" name="longitude" id="longitude">
+
+
+<button type="submit" class="btn btn-primary btn-block">
+Send SOS
+</button>
+
 </form>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+
+<script>
+
+function getLocation(){
+
+if(navigator.geolocation){
+
+document.getElementById("locationStatus").innerText="Getting your location...";
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+document.getElementById("latitude").value=position.coords.latitude;
+document.getElementById("longitude").value=position.coords.longitude;
+
+document.getElementById("locationStatus").innerText="Location captured successfully.";
+
+});
+
+}
+else{
+
+document.getElementById("locationStatus").innerText="Location not supported.";
+
+}
+
+}
+
+</script>
 
 {% endblock %}

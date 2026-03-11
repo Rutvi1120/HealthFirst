@@ -738,8 +738,13 @@ input:focus, select:focus, textarea:focus {
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 20px;
+  align-items: start;
 }
 
+.dash-content{
+  width:100%;
+  min-width:0;
+}
 .dash-sidebar {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -749,6 +754,7 @@ input:focus, select:focus, textarea:focus {
   position: sticky;
   top: 110px;
   height: fit-content;
+  align-self: start;
 }
 
 .dash-brand {

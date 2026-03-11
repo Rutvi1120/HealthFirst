@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Medical Report - HealthFirst{% endblock %}
+
+{% block content %}
+
+<style>
+/* Fix layout only for this page */
+
+.dash-layout{
+    display:flex !important;
+    align-items:flex-start;
+    gap:25px;
+}
+
+.dash-sidebar{
+    width:240px;
+    flex-shrink:0;
+}
+
+.dash-content{
+    flex:1;
+}
+</style>
+
+<section class="dash">
+  <div class="container dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <div class="dash-brand">Hospital Panel</div>
+
+      <nav class="dash-menu">
+    <a href="{% url 'hospitals:hospital_dashboard' %}">Overview</a>
+    <a href="{% url 'hospital_sos_list' %}">SOS Requests</a>
+    <a href="{% url 'ambulance_status' %}">Ambulances</a>
+    <a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+    <a href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+    <a href="{% url 'hospitals:upload_report' %}">Upload Medical Report</a>
+    <a class="active" href="{% url 'hospitals:verify_report' %}">Verify Medical Report</a>
+    <a href="{% url 'feedback:view_feedback' %}">Feedback</a>
+      </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <div class="dash-content">
+
+      <div class="dash-head">
+        <div>
+          <h1>Verify Medical Report</h1>
+          <p class="muted">Check report integrity using SHA-256 hash verification.</p>
+        </div>
+      </div>
+
+      <div class="card" style="max-width:600px;">
+
+        <form method="POST" enctype="multipart/form-data" class="form-grid">
+
+          {% csrf_token %}
+
+          <label>Patient Name</label>
+          <input type="text" name="patient_name" required>
+
+          <label>Report Type</label>
+          <input type="text" name="report_type" required>
+
+          <label>Report Date</label>
+          <input type="date" name="report_date" required>
+
+          <label>Upload Report File</label>
+          <input type="file" name="report_file" required>
+        
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:15px;">
+            Verify Report
+          </button>
+        
+        
+        </form>
+
+        {% if result %}
+        <div style="margin-top:20px;font-weight:bold;">
+          {{ result }}
+        </div>
+        {% endif %}
+
+      </div>
+
+      <br>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
