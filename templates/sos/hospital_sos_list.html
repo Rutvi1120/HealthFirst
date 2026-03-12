@@ -48,12 +48,10 @@
 <td>{{ sos.status }}</td>
 <td>
 
-<!-- Pending: Accept / Decline -->
 {% if sos.status == "PENDING" %}
 <a href="{% url 'accept_sos' sos.id %}" class="sos-btn sos-btn-success">Accept</a>
 <a href="{% url 'decline_sos' sos.id %}" class="sos-btn sos-btn-danger">Decline</a>
 
-<!-- Accepted: Assign Ambulance -->
 {% elif sos.status == "ACCEPTED" %}
 <form method="POST" action="{% url 'assign_ambulance' sos.id %}">
     {% csrf_token %}
@@ -65,22 +63,20 @@
     <button type="submit" class="sos-btn sos-btn-primary">Assign Ambulance</button>
 </form>
 
-<!-- Dispatched / On Route / Arrived: Show Ambulance + Admin Dropdown -->
 {% elif sos.status == "DISPATCHED" or sos.status == "ON_ROUTE" or sos.status == "ARRIVED" %}
-{% if sos.ambulance %}
-Ambulance: {{ sos.ambulance.vehicle_number }} - {{ sos.ambulance.driver_name }}
-{% endif %}
-<form method="POST" action="{% url 'update_status' sos.id %}">
-    {% csrf_token %}
-    <select name="status">
-        <option value="ON_ROUTE">ON_ROUTE</option>
-        <option value="ARRIVED">ARRIVED</option>
-        <option value="COMPLETED">COMPLETED</option>
-    </select>
-    <button type="submit" class="sos-btn sos-btn-primary">Update Status</button>
-</form>
+    {% if sos.ambulance %}
+        Ambulance: {{ sos.ambulance.vehicle_number }} - {{ sos.ambulance.driver_name }}
+    {% endif %}
+    <form method="POST" action="{% url 'update_status' sos.id %}">
+        {% csrf_token %}
+        <select name="status">
+            <option value="ON_ROUTE">ON_ROUTE</option>
+            <option value="ARRIVED">ARRIVED</option>
+            <option value="COMPLETED">COMPLETED</option>
+        </select>
+        <button type="submit" class="sos-btn sos-btn-primary">Update Status</button>
+    </form>
 
-<!-- Completed / Declined -->
 {% elif sos.status == "COMPLETED" %}
 Completed
 {% elif sos.status == "DECLINED" %}
@@ -101,7 +97,6 @@ Declined
 </div>
 </section>
 
-<!-- Scoped SOS Table CSS only -->
 <style>
 .sos-table-wrapper .table{
     width:100%;
