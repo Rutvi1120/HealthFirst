@@ -11,19 +11,13 @@
     <div class="eyebrow">Join HealthFirst</div>
     <h2>Create a secure account in minutes</h2>
   </div>
-
+<!-- 
   {% if messages %}
     {% for message in messages %}
       <div class="alert-message">
         {{ message }}
       </div>
     {% endfor %}
-  {% endif %}
-
-  <!-- {% if form.errors %}
-  <div class="alert-message">
-    {{ form.errors }}
-  </div>
   {% endif %} -->
 
   <form method="post">
@@ -48,9 +42,6 @@
 
       <label>Mobile</label>
       {{ form.mobile }}
-
-      <label>ID Proof</label>
-      {{ form.id_proof }}
 
       <div id="hospital-field">
         <label>Select Hospital</label>

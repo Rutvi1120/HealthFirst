@@ -56,7 +56,6 @@ def register_view(request):
             profile = user.profile
             profile.role = form.cleaned_data["role"]
             profile.mobile = form.cleaned_data["mobile"]
-            profile.id_proof = form.cleaned_data.get("id_proof", "")
             profile.save()
 
             # assign hospital if hospital admin
