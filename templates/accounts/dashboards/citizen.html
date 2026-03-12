@@ -58,7 +58,7 @@
 <!-- Sidebar -->
 <aside class="dash-sidebar">
 
-  <div class="dash-brand">Citizen Panel</div>
+  <div class="dash-brand"> Hello {{ request.user.username }} ,{{ greeting }}!</div>
 
   <nav class="dash-menu">
         <a class="active" href="{% url 'dashboard' %}">Overview</a>

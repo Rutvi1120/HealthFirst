@@ -159,3 +159,73 @@ def dashboard_view(request):
         "accounts/dashboards/citizen.html",
         {"alerts": alerts}
     )
+
+from datetime import datetime
+
+@login_required
+def dashboard_view(request):
+
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    role = _canonical_role(profile.role)
+
+    # Greeting
+    hour = datetime.now().hour
+    if hour < 12:
+        greeting = "Good Morning"
+    elif hour < 17:
+        greeting = "Good Afternoon"
+    elif hour < 21:
+        greeting = "Good Evening"
+    else:
+        greeting = "Good Night"
+
+    # CITIZEN
+    if role == "CITIZEN":
+
+        alerts = Alert.objects.filter(is_active=True).order_by("-created_at")[:5]
+
+        return render(
+            request,
+            "accounts/dashboards/citizen.html",
+            {
+                "alerts": alerts,
+                "greeting": greeting
+            }
+        )
+
+    # HOSPITAL
+    elif role == "HOSPITAL":
+
+        hospital = Hospital.objects.filter(admin=request.user).first()
+
+        return render(
+            request,
+            "accounts/dashboards/hospital.html",
+            {
+                "hospital": hospital,
+                "greeting": greeting
+            }
+        )
+
+    # SUPER
+    elif role == "SUPER":
+
+        return render(
+            request,
+            "accounts/dashboards/super.html",
+            {"greeting": greeting}
+        )
+
+    # OFFICER
+    elif role == "OFFICER":
+
+        alerts = Alert.objects.filter(created_by=request.user).order_by("-created_at")
+
+        return render(
+            request,
+            "accounts/dashboards/officer.html",
+            {
+                "alerts": alerts,
+                "greeting": greeting
+            }
+        )

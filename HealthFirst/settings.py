@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'bloodbank',
     'medical_reports',
     'alerts',
-    'guidance',
     'feedback',
 ]
 
