@@ -5,8 +5,12 @@ from django.conf import settings
 class Hospital(models.Model):
     name = models.CharField(max_length=200)
     address = models.TextField()
-    admin = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
+    admin = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,    # allows no admin
+        blank=True    # allows blank in admin form
+    )
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
 
@@ -37,7 +41,12 @@ class MedicalReport(models.Model):
         return self.patient_name
     
 class Ambulance(models.Model):
-    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(
+        Hospital,
+        on_delete=models.CASCADE,
+        null=True,  # allow blank initially if needed
+        blank=True
+    )
     vehicle_number = models.CharField(max_length=50)
     driver_name = models.CharField(max_length=100)
     driver_mobile = models.CharField(max_length=15)
@@ -52,4 +61,4 @@ class Ambulance(models.Model):
     )
 
     def __str__(self):
-        return f"{self.vehicle_number} - {self.hospital.name}"
+        return f"{self.vehicle_number} - {self.hospital.name if self.hospital else 'No Hospital'}"

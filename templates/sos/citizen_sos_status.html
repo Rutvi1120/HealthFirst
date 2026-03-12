@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}My SOS Requests{% endblock %}
+
+{% block content %}
+<section class="dash">
+<div class="container dash-layout">
+
+<!-- Sidebar -->
+<aside class="dash-sidebar">
+<div class="dash-brand">Citizen Panel</div>
+ <nav class="dash-menu">
+        <a class="active" href="{% url 'dashboard' %}">Overview</a>
+        <a href="{% url 'raise_sos' %}">Create SOS</a>
+        <a href="{% url 'citizen_sos_status' %}">My SOS Requests</a>
+        <a href="{% url 'hospitals:view_beds' %}">Bed Availability</a>
+        <a href="{% url 'bloodbank:view_bloods' %}">Blood Availability</a>
+        <a href="{% url 'my_reports' %}">Medical Reports</a>
+        <a href="{% url 'citizen_alerts' %}">Health Alerts</a>
+        <a href="{% url 'feedback:submit_feedback' %}">Feedback</a>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="dash-main">
+<div class="dash-head">
+<h1>My SOS Requests</h1>
+<p class="muted">Track your emergency requests and ambulance assignments.</p>
+</div>
+
+{% if sos_list %}
+<div class="card">
+<table class="table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>Hospital</th>
+<th>Ambulance</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+{% for sos in sos_list %}
+<tr>
+<td>{{ sos.id }}</td>
+<td>{{ sos.description }}</td>
+<td>{% if sos.accepted_by %}{{ sos.accepted_by.name }}{% else %}-{% endif %}</td>
+<td>{% if sos.ambulance %}{{ sos.ambulance.vehicle_number }} - {{ sos.ambulance.driver_name }}{% else %}-{% endif %}</td>
+<td>{{ sos.status }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<p>No SOS requests sent yet.</p>
+{% endif %}
+
+</main>
+</div>
+</section>
+
+<!-- Only table CSS -->
+<style>
+.table{
+width:100%;
+border-collapse:collapse;
+}
+.table th{
+background:#f4f6fb;
+padding:12px;
+text-align:left;
+}
+.table td{
+padding:10px;
+border-top:1px solid #eee;
+}
+</style>
+
+{% endblock %}

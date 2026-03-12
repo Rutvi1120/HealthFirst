@@ -1,82 +1,132 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block title %}SOS Requests{% endblock %}
 
 {% block content %}
+<section class="dash">
+<div class="container dash-layout">
 
-<h2>Nearby SOS Requests</h2>
+<!-- Sidebar -->
+<aside class="dash-sidebar">
+<div class="dash-brand">Hospital Panel</div>
+<nav class="dash-menu">
+<a href="{% url 'hospitals:hospital_dashboard' %}">Overview</a>
+<a class="active" href="{% url 'hospital_sos_list' %}">SOS Requests</a>
+<a href="{% url 'ambulance_status' %}">Ambulances</a>
+<a href="{% url 'hospitals:manage_beds' %}">Bed Management</a>
+<a href="{% url 'bloodbank:manage_bloods' %}">Blood Bank</a>
+<a href="{% url 'hospitals:upload_report' %}">Upload Medical Report</a>
+<a href="{% url 'hospitals:verify_report' %}">Verify Medical Report</a>
+<a href="{% url 'feedback:view_feedback' %}">Feedback</a>
+</nav>
+</aside>
+
+<!-- Main Content -->
+<main class="dash-main">
+<div class="dash-head">
+<h1>Current SOS Requests</h1>
+<p class="muted">Manage emergency cases.</p>
+</div>
 
 {% if sos_list %}
-
-<table border="1" cellpadding="10" cellspacing="0" width="100%">
+<div class="card sos-table-wrapper">
+<table class="table">
 <thead>
 <tr>
 <th>ID</th>
 <th>Description</th>
 <th>Location</th>
 <th>Status</th>
-<th>Action</th>
-<th>Update Ambulance</th>
+<th>Action / Ambulance</th>
 </tr>
 </thead>
-
 <tbody>
-
 {% for sos in sos_list %}
-
 <tr>
-
 <td>{{ sos.id }}</td>
-
 <td>{{ sos.description }}</td>
-
 <td>{{ sos.latitude }}, {{ sos.longitude }}</td>
-
 <td>{{ sos.status }}</td>
-
 <td>
 
-{% if sos.status == "pending" %}
+<!-- Pending: Accept / Decline -->
+{% if sos.status == "PENDING" %}
+<a href="{% url 'accept_sos' sos.id %}" class="sos-btn sos-btn-success">Accept</a>
+<a href="{% url 'decline_sos' sos.id %}" class="sos-btn sos-btn-danger">Decline</a>
 
-<a href="{% url 'accept_sos' sos.id %}" class="btn btn-primary">
-Accept SOS
-</a>
-
-{% else %}
-
-Accepted by {{ sos.assigned_hospital.name }}
-
-{% endif %}
-
-</td>
-
-<td>
-
-<form method="POST" action="{% url 'update_status' sos.id %}">
-{% csrf_token %}
-
-<select name="status">
-<option value="ACCEPTED">Accepted</option>
-<option value="DISPATCHED">Ambulance Dispatched</option>
-<option value="ON_ROUTE">On Route</option>
-<option value="COMPLETED">Completed</option>
-</select>
-
-<button type="submit">Update</button>
-
+<!-- Accepted: Assign Ambulance -->
+{% elif sos.status == "ACCEPTED" %}
+<form method="POST" action="{% url 'assign_ambulance' sos.id %}">
+    {% csrf_token %}
+    <select name="ambulance">
+        {% for amb in ambulances %}
+            <option value="{{ amb.id }}">{{ amb.vehicle_number }} - {{ amb.driver_name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="sos-btn sos-btn-primary">Assign Ambulance</button>
 </form>
-</td>
 
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-{% else %}
-
-<p>No nearby SOS requests.</p>
-
+<!-- Dispatched / On Route / Arrived: Show Ambulance + Admin Dropdown -->
+{% elif sos.status == "DISPATCHED" or sos.status == "ON_ROUTE" or sos.status == "ARRIVED" %}
+{% if sos.ambulance %}
+Ambulance: {{ sos.ambulance.vehicle_number }} - {{ sos.ambulance.driver_name }}
 {% endif %}
+<form method="POST" action="{% url 'update_status' sos.id %}">
+    {% csrf_token %}
+    <select name="status">
+        <option value="ON_ROUTE">ON_ROUTE</option>
+        <option value="ARRIVED">ARRIVED</option>
+        <option value="COMPLETED">COMPLETED</option>
+    </select>
+    <button type="submit" class="sos-btn sos-btn-primary">Update Status</button>
+</form>
+
+<!-- Completed / Declined -->
+{% elif sos.status == "COMPLETED" %}
+Completed
+{% elif sos.status == "DECLINED" %}
+Declined
+{% endif %}
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<p>No SOS requests available.</p>
+{% endif %}
+
+</main>
+</div>
+</section>
+
+<!-- Scoped SOS Table CSS only -->
+<style>
+.sos-table-wrapper .table{
+    width:100%;
+    border-collapse:collapse;
+}
+.sos-table-wrapper .table th{
+    background:#f4f6fb;
+    padding:12px;
+    text-align:left;
+}
+.sos-table-wrapper .table td{
+    padding:10px;
+    border-top:1px solid #eee;
+}
+.sos-table-wrapper .sos-btn{
+    padding:6px 12px;
+    border-radius:5px;
+    font-size:13px;
+    margin-right:5px;
+    cursor:pointer;
+    text-decoration:none;
+}
+.sos-table-wrapper .sos-btn-success{background:#28a745;color:white;}
+.sos-table-wrapper .sos-btn-danger{background:#dc3545;color:white;}
+.sos-table-wrapper .sos-btn-primary{background:#007bff;color:white;}
+</style>
 
 {% endblock %}

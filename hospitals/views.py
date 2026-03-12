@@ -6,6 +6,7 @@ from .models import Ambulance
 from .forms import AmbulanceForm
 from django.shortcuts import render, redirect
 from accounts.models import Profile
+from sos.models import SOSRequest
 
 
 @login_required
@@ -137,26 +138,34 @@ from .models import Ambulance, Hospital
 from .forms import AmbulanceForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 
 @login_required
 def register_ambulance(request):
+    # Only hospital admins can register ambulances
+    if not hasattr(request.user, "profile") or request.user.profile.role != "HOSPITAL":
+        messages.error(request, "Access denied.")
+        return redirect("landing")
 
+    # Get the hospital of the logged-in admin
     hospital = Hospital.objects.filter(admin=request.user).first()
+    if not hospital:
+        messages.error(request, "Your hospital is not registered yet!")
+        return redirect("landing")
 
     if request.method == "POST":
-
         form = AmbulanceForm(request.POST)
-
         if form.is_valid():
             ambulance = form.save(commit=False)
-            ambulance.hospital = hospital
+            ambulance.hospital = hospital   # Assign hospital automatically
+            ambulance.status = "AVAILABLE" # Default status
             ambulance.save()
-
+            messages.success(request, "Ambulance registered successfully!")
             return redirect("ambulance_status")
-
     else:
         form = AmbulanceForm()
 
     return render(request, "hospitals/register_ambulance.html", {"form": form})
+
+
 
